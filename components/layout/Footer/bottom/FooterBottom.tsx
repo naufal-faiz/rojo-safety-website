@@ -56,13 +56,13 @@ const FooterBottom = () => {
                 className="animate_top"
             >
                 <p className="text-center">
-                    &copy; {new Date().getFullYear()} Rojosafety - Perusahaan Jasa Keselamatan dan Kesehatan Kerja.
+                    &copy; {new Date().getFullYear()} Rojosafety - Perusahaan Jasa Keselamatan dan Kesehatan Kerja. <br /> Distributed by <a target="_blank" className="hover:text-primary transition-colors duration-300 hover:underline font-semibold" href="https://themewagon.com/">ThemeWagon</a>
                 </p>
             </motion.div>
 
-            <FooterSocialIconList icons={socialIcons}/>
+            <FooterSocialIconList icons={socialIcons} />
         </div>
     )
-}   
+}
 
 export default FooterBottom

@@ -22,10 +22,10 @@ const FooterMailForm = () => {
                 className="animate_top"
             >
                 <h4 className="mb-9 text-itemtitle2 font-medium text-black dark:text-white">
-                    Newsletter
+                    Berlangganan
                 </h4>
                 <p className="mb-4 w-[90%]">
-                    Subscribe to receive future updates
+                    Dapatkan berita terbaru dari kami
                 </p>
 
                 <form action="#">

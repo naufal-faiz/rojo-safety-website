@@ -11,7 +11,7 @@ const TopFooter = () => {
 
                 <div className="flex w-full flex-col gap-8 md:flex-row md:justify-between md:gap-0 lg:w-2/3 xl:w-7/12">
                     <FooterCompanyAddress />
-                    <FooterList title="Akses Cepat" items={["Beranda", "Blog", "Jenis Training", "Jadwal"]} />
+                    <FooterList title="Layanan kami" items={["Beranda", "Berita", "Jenis Training", "Jadwal Kegiatan", "Sertifikasi", "Jenis Training"]} />
                     <FooterMailForm />
                 </div>
             </div>

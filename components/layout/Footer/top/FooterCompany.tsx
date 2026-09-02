@@ -24,25 +24,20 @@ const FooterCompany = () => {
             >
                 <a href="/" className="relative">
                     <div className="flex items-center gap-2">
-                        <div>
-                            <Image
-                                width={50}
-                                height={50}
-                                src="/images/logo/logo-image.png"
-                                alt="Logo"
-                                className="dark:hidden"
-                            />
-                            <Image
-                                width={50}
-                                height={50}
-                                src="/images/logo/logo-image.png"
-                                alt="Logo"
-                                className="hidden dark:block"
-                            />
-                        </div>
-                        <div className="footer-logo-title">
-                            <p className="font-bold text-primary text-3xl">ROJO SAFETY</p>
-                        </div>
+                        <Image
+                            width={200}
+                            height={100}
+                            src="/images/logo/logo-banner.png"
+                            alt="Logo"
+                            className="dark:hidden"
+                        />
+                        <Image
+                            width={200}
+                            height={100}
+                            src="/images/logo/logo-banner-dark.png"
+                            alt="Logo"
+                            className="hidden dark:block"
+                        />
                     </div>
                 </a>
 
