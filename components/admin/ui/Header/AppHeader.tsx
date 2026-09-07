@@ -1,7 +1,7 @@
 "use client";
-import { ThemeToggleButton } from "../Common/ThemeToggleButton";
-import NotificationDropdown from "../Header/NotificationDropdown";
-import UserDropdown from "../Header/UserDropdown";
+import ThemeToggler from "@/components/public/layout/Header/ThemeToggler";
+import NotificationDropdown from "@/components/admin/ui/Header/NotificationDropdown";
+import UserDropdown from "@/components/admin/ui/Header/UserDropdown";
 import { useSidebar } from "@/lib/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -85,17 +85,17 @@ const AppHeader: React.FC = () => {
 
           <Link href="/" className="lg:hidden">
             <Image
-              width={154}
+              width={180}
               height={32}
               className="dark:hidden"
-              src="./images/logo/logo.svg"
+              src="/images/logo/logo-banner.png"
               alt="Logo"
             />
             <Image
-              width={154}
+              width={180}
               height={32}
               className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
+              src="/images/logo/logo-banner-dark.png"
               alt="Logo"
             />
           </Link>
@@ -162,7 +162,8 @@ const AppHeader: React.FC = () => {
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
             {/* <!-- Dark Mode Toggler --> */}
-            <ThemeToggleButton />
+
+            <ThemeToggler />
             {/* <!-- Dark Mode Toggler --> */}
 
            <NotificationDropdown /> 

@@ -1,22 +1,17 @@
+import { SidebarProvider } from '@/lib/context/SidebarContext';
 import { Metadata } from 'next';
-import Provider from "./Provider"
 
 export const metadata: Metadata = {
-  title: "Rojo Safety - Penyedia Jasa K3",
+  title: "Rojo Safety - Dashboard Admin",
   description: "Rojo Safety Penyedia Jasa Kesehatan, Keselamatan Kerja di Bekasi",
   icons: {
     icon: "/images/favicon.ico"
   }
 };
 
-const RootLayout = ({ children }: LayoutProps<"/">) => {
-  return (
-    <>
-      <Provider>
-        {children}  
-      </Provider>
-    </>
-  )
+export default function AdminLayout({ children }: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return <SidebarProvider>{children}</SidebarProvider>;
 }
 
-export default RootLayout

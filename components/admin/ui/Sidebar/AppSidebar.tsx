@@ -303,34 +303,32 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex  ${
-          !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
-        }`}
+        className={`py-3 flex justify-start lg:py-8`}
       >
-        <Link href="/">
+        <Link href="/admin" className="hidden lg:block">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
                 className="dark:hidden"
-                src="/tailadmin-nextjs/images/logo/logo.svg"
+                src="/images/logo/logo-banner.png"
                 alt="Logo"
-                width={150}
+                width={200}
                 height={40}
               />
               <Image
                 className="hidden dark:block"
-                src="/tailadmin-nextjs/images/logo/logo-dark.svg"
+                src="/images/logo/logo-banner-dark.png"
                 alt="Logo"
-                width={150}
+                width={200}
                 height={40}
               />
             </>
           ) : (
             <Image
-              src="/tailadmin-nextjs/images/logo/logo-icon.svg"
+              src="/images/logo/logo-image.png"
               alt="Logo"
-              width={32}
-              height={32}
+              width={50}
+              height={50}
             />
           )}
         </Link>

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Dropdown } from "../ui/dropdown/Dropdown";
-import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { Dropdown } from "../dropdown/Dropdown";
+import { DropdownItem } from "../dropdown/DropdownItem";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +24,9 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
           <Image
-            width={44}
-            height={44}
-            src="/tailadmin-nextjs/images/user/owner.jpg"
+            width={40}
+            height={40}
+            src="/images/user/user-01.png"
             alt="User"
           />
         </span>
