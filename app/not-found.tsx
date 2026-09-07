@@ -1,5 +1,5 @@
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import Footer from "@/components/public/layout/Footer";
+import Header from "@/components/public/layout/Header";
 import { Metadata } from "next";
 import Image from "next/image";
 

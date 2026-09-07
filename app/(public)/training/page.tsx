@@ -1,5 +1,5 @@
-import TrainingItem from "@/components/ui/main/Training/TrainingItem";
-import trainingData from "@/components/ui/main/Training/trainingScheduleData";
+import TrainingItem from "@/components/public/main/Training/TrainingItem";
+import trainingData from "@/components/public/main/Training/trainingScheduleData";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

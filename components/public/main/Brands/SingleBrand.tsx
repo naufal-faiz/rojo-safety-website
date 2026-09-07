@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Brand } from "@/types/brand";
+import { Brand } from "./brandData";
 
 const SingleBrand = ({ brand }: { brand: Brand }) => {
   const { image, href, name, imageLight } = brand;

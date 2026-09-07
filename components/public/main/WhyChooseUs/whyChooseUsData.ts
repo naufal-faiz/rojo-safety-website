@@ -1,4 +1,4 @@
-import { CompanyService } from "@/types/companyService";
+import { CompanyService } from "../CompanyServices/servicesData"
 
 const whyChooseUsData: CompanyService[] = [
     {

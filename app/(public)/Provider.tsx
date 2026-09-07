@@ -1,11 +1,11 @@
 "use client";
 
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import Lines from "@/components/layout/Lines";
-import ScrollToTop from "@/components/ui/ScrollToTop";
+import Footer from "@/components/public/layout/Footer";
+import Header from "@/components/public/layout/Header";
+import Lines from "@/components/public/layout/Lines";
+import ScrollToTop from "@/components/public/ScrollToTop";
 import { ThemeProvider } from "next-themes";
-import ToasterContext from "../context/ToastContext";
+import ToasterContext from "../../lib/context/ToastContext";
 
 export default function ClientLayout({
     children,

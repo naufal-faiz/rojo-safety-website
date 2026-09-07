@@ -1,5 +1,5 @@
-import ArticleItem from "@/components/ui/Article/ArticleItem";
-import articleData from "@/components/ui/Article/articleData";
+import ArticleItem from "@/components/public/Article/ArticleItem";
+import articleData from "@/components/public/Article/articleData";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

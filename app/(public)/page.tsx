@@ -9,7 +9,7 @@ import {
   WhyChooseUs,
   Training,
   Article
-} from "@/components/ui/main"
+} from "@/components/public/main"
 
 function Home() {
   return (
