@@ -3,7 +3,7 @@
 import Footer from "@/components/public/layout/Footer";
 import Header from "@/components/public/layout/Header";
 import Lines from "@/components/public/layout/Lines";
-import ScrollToTop from "@/components/public/ScrollToTop";
+import ScrollToTop from "@/components/public/main/ScrollToTop";
 import { ThemeProvider } from "next-themes";
 import ToasterContext from "../../lib/context/ToastContext";
 

@@ -1,7 +1,6 @@
 const LoadingPage = () => {
   return (
-    <div>
-      ini load... 
+    <div className="loader">
     </div>
   )
 }
