@@ -6,11 +6,8 @@ export type SocialIcon = {
     d: string
 }
 
-type FooterSocialIconListProps = {
-    icons: SocialIcon[]
-}
 
-const FooterSocialIconList = ({ icons }: FooterSocialIconListProps) => {
+const FooterSocialIconList = ({ icons }: {icons: SocialIcon[]}) => {
     return (
         <>
             <motion.div

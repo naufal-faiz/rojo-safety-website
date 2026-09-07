@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 type FooterListProps = {
     title: string,
     items: string[]
+    url: string
 }
 
-const FooterList = ({ title, items }: FooterListProps) => {
+const FooterList = ({ title, items, url }: FooterListProps) => {
     return (
         <>
             <motion.div
@@ -33,7 +34,7 @@ const FooterList = ({ title, items }: FooterListProps) => {
                     {items.map((item, index) => (
                         <li key={index}>
                             <a
-                                href="#"
+                                href={url}
                                 className="mb-3 inline-block hover:text-primary"
                             >
                                 {item}

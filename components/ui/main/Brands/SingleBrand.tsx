@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Brand } from "@/types/brand";
 
 const SingleBrand = ({ brand }: { brand: Brand }) => {
-  const { image, href, name, imageLight, id } = brand;
+  const { image, href, name, imageLight } = brand;
 
   return (
     <a href={href} className="relative block h-10 w-[120px] shrink-0">

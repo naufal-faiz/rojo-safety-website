@@ -155,62 +155,62 @@
   }
 }
 
-.blog-details-docs {
+.article-details-docs {
   @apply rounded-lg border border-white p-7.5 shadow-solid-3 transition-all dark:border-strokedark  dark:bg-blacksection xl:p-12.5;
 }
 
-.blog-details p {
+.article-details p {
   @apply mb-8 text-base leading-relaxed text-titlebgdark dark:text-waterloo;
 }
 
-.blog-details p strong {
+.article-details p strong {
   @apply text-primary dark:text-waterloo;
 }
-.blog-details h3 strong,
-.blog-details h3 {
+.article-details h3 strong,
+.article-details h3 {
   @apply mb-10 text-xl font-semibold! leading-tight text-black dark:text-white sm:text-2xl sm:leading-tight lg:text-xl lg:leading-tight xl:text-2xl xl:leading-tight;
 }
 
-.blog-details h4 strong,
-.blog-details h4 {
+.article-details h4 strong,
+.article-details h4 {
   @apply text-xl font-semibold! leading-tight text-black dark:text-white sm:text-2xl sm:leading-tight lg:text-xl lg:leading-tight xl:text-2xl xl:leading-tight;
 }
 
-.blog-details h5 strong,
-.blog-details h5 {
+.article-details h5 strong,
+.article-details h5 {
   @apply mb-3 text-lg font-semibold! leading-tight text-black dark:text-white sm:text-xl;
 }
 
-.blog-details h1 {
+.article-details h1 {
   @apply mb-4 text-3xl font-bold! leading-tight! text-black dark:text-white sm:text-4xl md:text-[45px] lg:text-4xl xl:text-[45px];
 }
-.blog-details h2 strong,
-.blog-details h2 {
+.article-details h2 strong,
+.article-details h2 {
   @apply mb-4 text-[26px] font-bold! leading-tight! text-black dark:text-white sm:text-3xl md:text-4xl;
 }
 
-.blog-details ul,
-.blog-details ol {
+.article-details ul,
+.article-details ol {
   @apply mb-10 list-inside list-disc text-titlebgdark;
 }
 
-.blog-details li,
-.blog-details li {
+.article-details li,
+.article-details li {
   @apply mb-2 text-base text-titlebgdark dark:text-waterloo;
 }
 
-.blog-details blockquote {
+.article-details blockquote {
   @apply relative z-10 mb-10 overflow-hidden rounded-xs bg-manatee p-8 text-center text-base font-medium italic text-black dark:bg-titlebgdark md:py-9 lg:px-10;
 }
 
-.blog-details blockquote::after {
+.article-details blockquote::after {
   content: "";
-  @apply absolute bottom-0 right-0 h-20 w-20 bg-[url(/images/blog/quote-shape-2.svg)] bg-contain bg-right-bottom bg-no-repeat;
+  @apply absolute bottom-0 right-0 h-20 w-20 bg-[url(/images/article/quote-shape-2.svg)] bg-contain bg-right-bottom bg-no-repeat;
 }
 
-.blog-details blockquote::before {
+.article-details blockquote::before {
   content: "";
-  @apply absolute left-0 top-0 h-[106px] w-[140px] bg-[url(/images/blog/quote-shape-1.svg)] bg-contain bg-left-top bg-no-repeat dark:bg-[url(/images/blog/quote-shape-1.svg)];
+  @apply absolute left-0 top-0 h-[106px] w-[140px] bg-[url(/images/article/quote-shape-1.svg)] bg-contain bg-left-top bg-no-repeat dark:bg-[url(/images/article/quote-shape-1.svg)];
 }
 
 pre {

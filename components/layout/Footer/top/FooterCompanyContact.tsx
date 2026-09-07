@@ -25,7 +25,7 @@ const FooterCompanyContact = () => {
         </h4>
         <div className="mb-9">
           <p className='mb-4'>(021) 8888-6579</p>
-          <p className='mb-4 max-w-xs'>blok A1, Jl. Duta Bumi Raya No.8, RT.007/RW.030, Pejuang, Kecamatan Medan Satria, Kota Bks, Jawa Barat 17131</p>
+          <p className='mb-4 max-w-xs'>Blok A1, Jl. Duta Bumi Raya No.8, RT.007/RW.030, Pejuang, Kecamatan Medan Satria, Kota Bks, Jawa Barat 17131</p>
           <a className='mb-3 inline-block hover:text-primary' href="mailto:marketing@rojosafety.com">marketing@rojosafety.com</a>
         </div>
 

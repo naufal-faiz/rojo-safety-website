@@ -15,15 +15,15 @@ const menuData: Menu[] = [
     },
     {
         id: 2,
-        title: "Jadwal Training",
+        title: "Training",
         newTab: false,
-        path: "/#features",
+        path: "/training",
     },
     {
         id: 3,
-        title: "Berita",
+        title: "Artikel",
         newTab: false,
-        path: "/blog",
+        path: "/artikel",
     },
     {
         id: 4,
@@ -34,7 +34,7 @@ const menuData: Menu[] = [
                 id: 41,
                 title: "Sertifikasi Kemnaker",
                 newTab: false,
-                path: "/blog",
+                path: "/article",
             },
             {
                 id: 42,
@@ -78,7 +78,7 @@ const menuData: Menu[] = [
         id: 4,
         title: "Tentang Kami",
         newTab: false,
-        path: "/support",
+        path: "/about",
     },
 ];
 

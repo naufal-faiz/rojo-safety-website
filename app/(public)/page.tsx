@@ -1,11 +1,29 @@
-import Brands from "@/components/ui/main/Brands"
-import Hero from "@/components/ui/main/Hero"
+import {
+  Benefits,
+  Brands,
+  CompanyService,
+  FAQ,
+  FunFact,
+  Hero,
+  Testimonial,
+  WhyChooseUs,
+  Training,
+  Article
+} from "@/components/ui/main"
 
 function Home() {
   return (
     <main>
       <Hero />
-      <Brands/>
+      <Brands />
+      <CompanyService />
+      <Benefits />
+      <WhyChooseUs />
+      <FunFact />
+      <Training />
+      <FAQ />
+      <Testimonial />
+      <Article />
     </main>
   )
 }
