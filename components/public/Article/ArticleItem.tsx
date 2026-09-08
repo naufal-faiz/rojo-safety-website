@@ -1,5 +1,5 @@
 "use client";
-import { Article } from "@/types/article";
+import { Article } from "@/types/article/article";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

@@ -1,4 +1,4 @@
-import { Training, CertificationType } from "@/types/training";
+import { Training, CertificationType } from "@/types/training/training";
 
 const trainingData: Training[] = [
     {

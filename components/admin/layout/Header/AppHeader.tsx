@@ -1,7 +1,7 @@
 "use client";
 import ThemeToggler from "@/components/public/layout/Header/ThemeToggler";
-import NotificationDropdown from "@/components/admin/ui/Header/NotificationDropdown";
-import UserDropdown from "@/components/admin/ui/Header/UserDropdown";
+import NotificationDropdown from "@/components/admin/layout/Header/NotificationDropdown";
+import UserDropdown from "@/components/admin/layout/Header/UserDropdown";
 import { useSidebar } from "@/lib/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";

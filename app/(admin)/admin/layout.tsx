@@ -1,8 +1,8 @@
 "use client";
 
 import { useSidebar } from "@/lib/context/SidebarContext";
-import AppHeader from "@/components/admin/ui/Header/AppHeader";
-import AppSidebar from "@/components/admin/ui/Sidebar/AppSidebar";
+import AppHeader from "@/components/admin/layout/Header/AppHeader";
+import AppSidebar from "@/components/admin/layout/Sidebar/AppSidebar";
 import Backdrop from "@/components/admin/layout/Backdrop";
 import React from "react";
 

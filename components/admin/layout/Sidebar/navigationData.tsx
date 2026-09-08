@@ -12,8 +12,7 @@ import {
   UserCircleIcon,
 } from "@/public/icons/index";
 
-
-type NavigationData = {
+export type NavigationData = {
   name: string;
   icon: React.ReactNode;
   path?: string;
@@ -22,34 +21,69 @@ type NavigationData = {
 
 const navigationData: NavigationData[] = [
   {
-    icon: GridIcon,
+    icon: <GridIcon/>,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    path: "/admin",
   },
   {
-    icon: CalenderIcon,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <CalenderIcon/>,
+    name: "SEO",
+    path: "/admin/seo-settings",
   },
   {
-    icon: UserCircleIcon,
+    icon: <UserCircleIcon/>,
     name: "User Profile",
-    path: "/profile",
+    path: "/admin/profile",
   },
 
   {
-    name: "Forms",
-    icon: ListIcon,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+    name: "Artikel",
+    icon: <ListIcon/>,
+    subItems: [
+      { 
+        name: "Kategori", 
+        path: "/form-elements", 
+        pro: false 
+      },
+      { 
+        name: "Buat Artikel", 
+        path: "/form-elements", 
+        pro: false 
+      },
+    ],
   },
   {
-    name: "Tables",
-    icon: TableIcon,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+    name: "Training",
+    icon: <TableIcon/>,
+    subItems: [
+      { 
+        name: "Kategori", 
+        path: "/form-elements", 
+        pro: false 
+      },
+      { 
+        name: "Jenis Alat", 
+        path: "/form-elements", 
+        pro: false 
+      },
+      { 
+        name: "Jadwal", 
+        path: "/form-elements", 
+        pro: false 
+      },
+    ],
   },
   {
-    name: "Pages",
-    icon: PageIcon,
+    name: "Halaman Depan",
+    icon: <PageIcon/>,
+    subItems: [
+      { name: "Blank Page", path: "/blank", pro: false },
+      { name: "404 Error", path: "/error-404", pro: false },
+    ],
+  },
+  {
+    name: "Iklan",
+    icon: <PageIcon/>,
     subItems: [
       { name: "Blank Page", path: "/blank", pro: false },
       { name: "404 Error", path: "/error-404", pro: false },
@@ -59,7 +93,7 @@ const navigationData: NavigationData[] = [
 
 const othersItems: NavigationData[] = [
   {
-    icon: PieChartIcon,
+    icon: <PieChartIcon/>,
     name: "Charts",
     subItems: [
       { name: "Line Chart", path: "/line-chart", pro: false },
@@ -67,7 +101,7 @@ const othersItems: NavigationData[] = [
     ],
   },
   {
-    icon: BoxCubeIcon,
+    icon: <BoxCubeIcon/>,
     name: "UI Elements",
     subItems: [
       { name: "Alerts", path: "/alerts", pro: false },
@@ -79,7 +113,7 @@ const othersItems: NavigationData[] = [
     ],
   },
   {
-    icon: PlugInIcon,
+    icon: <PlugInIcon/>,
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/signin", pro: false },
@@ -87,3 +121,5 @@ const othersItems: NavigationData[] = [
     ],
   },
 ];
+
+export {navigationData, othersItems}

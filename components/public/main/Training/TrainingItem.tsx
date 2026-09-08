@@ -1,5 +1,5 @@
 "use client"
-import { Training } from "@/types/training"
+import { Training } from "@/types/training/training"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
