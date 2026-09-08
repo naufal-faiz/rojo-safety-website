@@ -1,0 +1,257 @@
+// Prisma 7: generator "prisma-client" (bukan lagi "prisma-client-js"),
+// output di-generate ke folder project (bukan node_modules/@prisma/client).
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+// Prisma 7: datasource TIDAK lagi berisi url/directUrl — koneksi
+// sekarang diatur di prisma.config.ts (untuk CLI/migrate) dan di
+// lib/prisma.ts lewat driver adapter (untuk runtime aplikasi).
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum UserRole {
+  ADMIN
+  COMPANY
+  PIC
+  USER
+
+  @@map("user_role")
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+
+  @@map("article_status")
+}
+
+enum TrainingScheduleType {
+  PUBLIC
+  INHOUSE
+
+  @@map("training_schedule_type")
+}
+
+enum TrainingScheduleStatus {
+  DRAFT
+  OPEN
+  FULL
+  CLOSED
+  CANCELLED
+  COMPLETED
+
+  @@map("training_schedule_status")
+}
+
+enum CertificationType {
+  NONE
+  BNSP
+  KEMNAKER
+
+  @@map("certification_type")
+}
+
+enum AdsModalPlacement {
+  LANDING_PAGE
+  ARTICLE
+
+  @@map("ads_modal_placement")
+}
+
+enum AdsModalType {
+  GENERAL
+  ARTICLE_PROMOTION
+
+  @@map("ads_modal_type")
+}
+
+enum AdsModalStatus {
+  ACTIVE
+  INACTIVE
+
+  @@map("ads_modal_status")
+}
+
+// ============================================================
+// MODELS
+// ============================================================
+
+// Catatan: kolom password/remember_token sengaja tidak ada karena
+// autentikasi ditangani Supabase Auth. id TIDAK auto-generate (tanpa
+// @default) karena harus disamakan persis dengan id dari auth.users
+// milik Supabase saat baris ini dibuat.
+model User {
+  id        String    @id @db.Uuid
+  email     String    @unique
+  phone     String?
+  username  String    @unique
+  name      String
+  role      UserRole  @default(USER)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("user")
+}
+
+// Tabel SEO universal — dihubungkan via seo_id (FK langsung, bukan polymorphic)
+// dari setiap tabel yang butuh SEO (article, training).
+model Seo {
+  id              String    @id @default(uuid()) @db.Uuid
+  metaTitle       String?   @map("meta_title")
+  metaDescription String?   @map("meta_description")
+  canonicalUrl    String?   @map("canonical_url")
+  robotsIndex     Boolean   @default(true) @map("robots_index")
+  robotsFollow    Boolean   @default(true) @map("robots_follow")
+  ogTitle         String?   @map("og_title")
+  ogDescription   String?   @map("og_description")
+  ogImage         String?   @map("og_image")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  article  Article?
+  training Training?
+
+  @@map("seo")
+}
+
+model ArticleCategory {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  articles Article[]
+
+  @@map("article_category")
+}
+
+model Article {
+  id                String        @id @default(uuid()) @db.Uuid
+  title             String
+  slug              String        @unique
+  content           String
+  thumbnail         String?
+  excerpt           String?
+  views             Int           @default(0)
+  status            ArticleStatus @default(DRAFT)
+  articleCategoryId String        @map("article_category_id") @db.Uuid
+  seoId             String?       @unique @map("seo_id") @db.Uuid
+  publishedAt       DateTime?     @map("published_at")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+  deletedAt         DateTime?     @map("deleted_at")
+
+  category  ArticleCategory @relation(fields: [articleCategoryId], references: [id])
+  seo       Seo?            @relation(fields: [seoId], references: [id])
+  adsModals AdsModal[]
+
+  @@index([articleCategoryId])
+  @@index([status])
+  @@map("article")
+}
+
+model TrainingCategory {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  trainings       Training[]
+  heavyEquipments HeavyEquipment[]
+
+  @@map("training_category")
+}
+
+// Referensi alat (forklift, APAR, dll) yang dicakup oleh sebuah training_category
+// (mis. kategori "Pesawat Angkat Angkut" atau "Damkar C").
+model HeavyEquipment {
+  id                 String    @id @default(uuid()) @db.Uuid
+  name               String
+  trainingCategoryId String    @map("training_category_id") @db.Uuid
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  deletedAt          DateTime? @map("deleted_at")
+
+  category TrainingCategory @relation(fields: [trainingCategoryId], references: [id])
+
+  @@index([trainingCategoryId])
+  @@map("heavy_equipment")
+}
+
+model Training {
+  id                 String            @id @default(uuid()) @db.Uuid
+  title              String
+  slug               String            @unique
+  description        String
+  image              String?
+  certification      CertificationType @default(NONE)
+  trainingCategoryId String            @map("training_category_id") @db.Uuid
+  seoId              String?           @unique @map("seo_id") @db.Uuid
+  createdAt          DateTime          @default(now()) @map("created_at")
+  updatedAt          DateTime          @updatedAt @map("updated_at")
+  deletedAt          DateTime?         @map("deleted_at")
+
+  category  TrainingCategory   @relation(fields: [trainingCategoryId], references: [id])
+  seo       Seo?               @relation(fields: [seoId], references: [id])
+  schedules TrainingSchedule[]
+
+  @@index([trainingCategoryId])
+  @@map("training")
+}
+
+model TrainingSchedule {
+  id         String                 @id @default(uuid()) @db.Uuid
+  trainingId String                 @map("training_id") @db.Uuid
+  type       TrainingScheduleType
+  status     TrainingScheduleStatus @default(DRAFT)
+  startAt    DateTime               @map("start_at")
+  endAt      DateTime               @map("end_at")
+  location   String?
+  price      Decimal                @db.Decimal(12, 2)
+  quota      Int
+  batch      Int
+  createdAt  DateTime               @default(now()) @map("created_at")
+  updatedAt  DateTime               @updatedAt @map("updated_at")
+  deletedAt  DateTime?              @map("deleted_at")
+
+  training Training @relation(fields: [trainingId], references: [id])
+
+  @@index([trainingId])
+  @@index([status])
+  @@index([type])
+  @@map("training_schedule")
+}
+
+// Satu row = satu placement (belum multi-lokasi per iklan, sesuai keputusan V1).
+model AdsModal {
+  id        String            @id @default(uuid()) @db.Uuid
+  image     String
+  placement AdsModalPlacement
+  type      AdsModalType      @default(GENERAL)
+  status    AdsModalStatus    @default(ACTIVE)
+  targetUrl String            @map("target_url")
+  startAt   DateTime          @map("start_at")
+  endAt     DateTime          @map("end_at")
+  articleId String?           @map("article_id") @db.Uuid
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+  deletedAt DateTime?         @map("deleted_at")
+
+  article Article? @relation(fields: [articleId], references: [id])
+
+  @@index([placement])
+  @@index([articleId])
+  @@map("ads_modal")
+}
