@@ -41,13 +41,18 @@ const navigationData: NavigationData[] = [
     icon: <ListIcon/>,
     subItems: [
       { 
-        name: "Kategori", 
-        path: "/form-elements", 
+        name: "Artikel", 
+        path: "/admin/artikel", 
         pro: false 
       },
       { 
         name: "Buat Artikel", 
-        path: "/form-elements", 
+        path: "/admin/artikel/create", 
+        pro: false 
+      },
+      { 
+        name: "Kelola Kategori", 
+        path: "/admin/kategori", 
         pro: false 
       },
     ],
@@ -58,17 +63,17 @@ const navigationData: NavigationData[] = [
     subItems: [
       { 
         name: "Kategori", 
-        path: "/form-elements", 
+        path: "/admin/", 
         pro: false 
       },
       { 
         name: "Jenis Alat", 
-        path: "/form-elements", 
+        path: "/admin/", 
         pro: false 
       },
       { 
         name: "Jadwal", 
-        path: "/form-elements", 
+        path: "/admin/", 
         pro: false 
       },
     ],

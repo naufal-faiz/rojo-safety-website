@@ -1,54 +1,27 @@
-import { Article } from "@/types/article/article";
+import { ArticleCategory } from "@/types/article/articleCategory";
 
-const ArticleData: Article[] = [
+const articleCategoryData: ArticleCategory[] = [
+  { name: "berita" },
+  { name: "artikel" },
+  { name: "kesehatan dan keselamatan" },
+  { name: "k3" },
+  { name: "training" },
+]
+
+const articleData = [
   {
-    _id: 1,
-    mainImage: "/images/article/blog-01.png",
-    title: "Free advertising for your online business",
-    type: "berita",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+    title: "Inspeksi rutin kran tower bulanan",
+    slug: "penemuan-harta-karun-di-monas",
+    content: "mana ada yang percaya pas lagi sibuk ngecek sling crane malah nemu peti emas kuno ketimbun beton coran jalanan",
+    article_category_id: "1"
   },
   {
-    _id: 2,
-    mainImage: "/images/article/blog-02.png",
-    title: "9 simple ways to improve your design skills",
-    type: "berita",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/article/blog-03.png",
-    title: "Tips to quickly improve your coding speed.",
-    type: "berita",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 1,
-    mainImage: "/images/article/blog-03.png",
-    title: "Free advertising for your online business",
-    type: "berita",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/article/blog-04.png",
-    title: "9 simple ways to improve your design skills",
-    type: "training",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/article/blog-01.png",
-    title: "Tips to quickly improve your coding speed.",
-    type: "training",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
+    title: "Perawatan mesin genset pabrik",
+    slug: "kebakaran-misterius-di-gudang-tua",
+    content: "lagi asyik ganti oli genset tiba-tiba asap hitam ngebul parah dari arah lorong belakang padahal ga ada yang main api",
+    article_category_id: "2"
+  }
 ];
 
-export default ArticleData;
+export { articleCategoryData, articleData };
+

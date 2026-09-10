@@ -3,9 +3,9 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { use } from "react"
 
-type trainingTitleProps = { params: Promise<{ slug: string }> }
+type TrainingTitleProps = { params: Promise<{ slug: string }> }
 
-const TrainingFormPage = ({ params }: trainingTitleProps) => {
+const TrainingFormPage = ({ params }: TrainingTitleProps) => {
   const { slug } = use(params)
 
   return (

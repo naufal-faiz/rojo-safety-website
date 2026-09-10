@@ -1,0 +1,103 @@
+"use client";
+
+import Link from "next/link";
+import { ArticleStatusType, AutosaveStatus } from "./types";
+
+interface ArticleFormHeaderProps {
+    isExisting: boolean;
+    articleStatus: ArticleStatusType;
+    autosaveStatus: AutosaveStatus;
+    isPublishing: boolean;
+    onSaveDraft: () => void;
+    onPublish: () => void;
+}
+
+export const ArticleFormHeader = ({
+    isExisting,
+    articleStatus,
+    autosaveStatus,
+    isPublishing,
+    onSaveDraft,
+    onPublish,
+}: ArticleFormHeaderProps) => {
+    return (
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white dark:bg-gray-900 p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            {/* Title & Back */}
+            <div className="flex items-center gap-3">
+                <Link
+                    href="/admin/artikel"
+                    className="flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors"
+                    title="Kembali ke Daftar Artikel"
+                >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </Link>
+                <div>
+                    <div className="flex items-center gap-2">
+                        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                            {isExisting ? "Edit Artikel" : "Buat Artikel Baru"}
+                        </h1>
+                        <span
+                            className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${
+                                articleStatus === "PUBLISHED"
+                                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                                    : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                            }`}
+                        >
+                            {articleStatus === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
+                        </span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                        {isExisting
+                            ? "Perbarui konten atau detail publikasi artikel"
+                            : "Tulis artikel edukasi atau promosi seputar K3 dan alat berat"}
+                    </p>
+                </div>
+            </div>
+
+            {/* Autosave Status Indicator & Action Buttons */}
+            <div className="flex items-center gap-3">
+                <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5 mr-1">
+                    {autosaveStatus === "saving" && (
+                        <>
+                            <span className="animate-spin size-3 border-2 border-brand-500 border-t-transparent rounded-full" />
+                            <span>Menyimpan draf...</span>
+                        </>
+                    )}
+                    {autosaveStatus === "saved" && (
+                        <>
+                            <span className="size-2 rounded-full bg-green-500" />
+                            <span>Draf tersimpan</span>
+                        </>
+                    )}
+                    {autosaveStatus === "error" && (
+                        <>
+                            <span className="size-2 rounded-full bg-red-500" />
+                            <span className="text-red-500">Gagal simpan otomatis</span>
+                        </>
+                    )}
+                </div>
+
+                <button
+                    type="button"
+                    onClick={onSaveDraft}
+                    className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                    Simpan Draf
+                </button>
+                <button
+                    type="button"
+                    onClick={onPublish}
+                    disabled={isPublishing}
+                    className="rounded-xl bg-brand-500 hover:bg-brand-600 px-5 py-2 text-sm font-medium text-white shadow-xs transition-colors flex items-center gap-2 disabled:opacity-60"
+                >
+                    {isPublishing && (
+                        <span className="animate-spin size-3.5 border-2 border-white border-t-transparent rounded-full" />
+                    )}
+                    <span>{articleStatus === "PUBLISHED" ? "Perbarui & Publikasikan" : "Publikasikan"}</span>
+                </button>
+            </div>
+        </div>
+    );
+};

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import SectionHeader from "../Common/SectionHeader";
 import ArticleItem from "./ArticleItem";
-import ArticleData from "./articleData";
+import { getPublishedArticles } from "@/lib/data/article/article";
 
 const Article = async () => {
+  const articles = await getPublishedArticles()
   return (
     <section className="py-20 lg:py-25 xl:pt-10 xl:pb-30">
       <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
@@ -22,8 +23,8 @@ const Article = async () => {
 
       <div className="mx-auto mt-15 max-w-c-1280 px-4 md:px-8 xl:mt-20 xl:px-0">
         <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-10">
-          {ArticleData.filter((article) => article.type === "berita").slice(0, 3).map((article, key) => (
-            <ArticleItem article={article} key={key} />
+          {articles.slice(0, 3).map((article) => (
+            <ArticleItem article={article} key={article.id} />
           ))}
         </div>
         <div className="flex items-center justify-center mx-auto mt-10 max-w-[1207px] px-4 md:px-8 xl:mt-10 xl:px-0">

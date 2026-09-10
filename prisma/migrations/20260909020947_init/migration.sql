@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "user_role" AS ENUM ('ADMIN', 'COMPANY', 'PIC', 'USER');
+CREATE TYPE "user_role" AS ENUM ('ADMIN', 'USER');
 
 -- CreateEnum
 CREATE TYPE "article_status" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
@@ -20,7 +20,7 @@ CREATE TYPE "ads_modal_placement" AS ENUM ('LANDING_PAGE', 'ARTICLE');
 CREATE TYPE "ads_modal_type" AS ENUM ('GENERAL', 'ARTICLE_PROMOTION');
 
 -- CreateEnum
-CREATE TYPE "ads_modal_status" AS ENUM ('ACTIVE', 'INACTIVE');
+CREATE TYPE "ads_modal_status" AS ENUM ('DRAFT', 'ACTIVE', 'INACTIVE');
 
 -- CreateTable
 CREATE TABLE "user" (
@@ -116,7 +116,7 @@ CREATE TABLE "training" (
     "slug" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "image" TEXT,
-    "certification" "certification_type" NOT NULL DEFAULT 'NONE',
+    "certification" "certification_type" NOT NULL DEFAULT 'KEMNAKER',
     "training_category_id" UUID NOT NULL,
     "seo_id" UUID,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -151,7 +151,7 @@ CREATE TABLE "ads_modal" (
     "image" TEXT NOT NULL,
     "placement" "ads_modal_placement" NOT NULL,
     "type" "ads_modal_type" NOT NULL DEFAULT 'GENERAL',
-    "status" "ads_modal_status" NOT NULL DEFAULT 'ACTIVE',
+    "status" "ads_modal_status" NOT NULL DEFAULT 'DRAFT',
     "target_url" TEXT NOT NULL,
     "start_at" TIMESTAMP(3) NOT NULL,
     "end_at" TIMESTAMP(3) NOT NULL,
