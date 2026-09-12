@@ -3,9 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { softDeleteArticle } from "./action";
+import { softDeleteArticle } from "../../../../lib/data/article/articleAction";
 import { useTableFilter } from "@/hooks/useTableFilter";
 import FilterBar from "@/components/common/FilterBar";
+import { usePagination } from "@/hooks/usePagination";
+import Pagination from "@/components/common/Pagination";
+import EmptyState from "@/components/common/EmptyState";
 
 type ArticleItem = {
     id: string;
@@ -27,17 +30,13 @@ export default function ArticleListClient({
     const [articles, setArticles] = useState<ArticleItem[]>(initialArticles);
     const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
-    const {
-        searchQuery,
-        setSearchQuery,
-        selectedStatus,
-        setSelectedStatus,
-        filteredData: filteredArticles,
-    } = useTableFilter({
-        data: articles,
-        searchFields: (a) => [a.title, a.slug, a.category?.name ?? ""],
-        statusField: "status",
+    const { searchQuery, setSearchQuery, selectedStatus, setSelectedStatus, filteredData: filteredArticles,
+    } = useTableFilter({ data: articles, searchFields: (a) => [a.title, a.slug, a.category?.name ?? ""], statusField: "status",
     });
+
+    const {
+        currentPage, setCurrentPage, totalPages, paginatedData: paginatedArticles, totalItems
+    } = usePagination(filteredArticles, 10)
 
     const handleDelete = async (id: string, title: string) => {
         if (!confirm(`Apakah Anda yakin ingin menghapus artikel "${title}"?`)) {
@@ -85,22 +84,14 @@ export default function ArticleListClient({
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                            {filteredArticles.length === 0 ? (
+                            {paginatedArticles.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="px-5 py-12 text-center text-gray-500 dark:text-gray-400">
-                                        <div className="flex flex-col items-center justify-center gap-2">
-                                            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400">
-                                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                                                </svg>
-                                            </div>
-                                            <p className="font-medium text-gray-800 dark:text-gray-200">Tidak ada artikel ditemukan</p>
-                                            <p className="text-xs text-gray-400">Silakan buat artikel baru atau sesuaikan filter pencarian.</p>
-                                        </div>
+                                        <EmptyState title="Tidak ada artikel ditemukan" description="Silakan buat artikel baru atau sesuaikan filter pencarian."/>
                                     </td>
                                 </tr>
                             ) : (
-                                filteredArticles.map((article) => (
+                                paginatedArticles.map((article) => (
                                     <tr
                                         key={article.id}
                                         className="hover:bg-gray-50/60 dark:hover:bg-gray-800/40 transition-colors"
@@ -195,6 +186,8 @@ export default function ArticleListClient({
                         </tbody>
                     </table>
                 </div>
+
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={totalItems} itemsPerPage={10} />
             </div>
         </div>
     );

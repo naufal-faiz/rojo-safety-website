@@ -77,7 +77,7 @@ export async function softDeleteArticle(id: string) {
     return { success: true, article: softDeleted }
 }
 
-// Tidak disarankan untuk dipakai
+// Sistem autodelete 30 hari setelah deletedAt != null
 export async function deleteArticle(id: string) {
     await prisma.article.delete({
         where: { id },

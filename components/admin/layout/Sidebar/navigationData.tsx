@@ -61,8 +61,8 @@ const navigationData: NavigationData[] = [
         pro: false
       },
       {
-        name: "Kelola Kategori",
-        path: "/admin/kategori",
+        name: "Kategori Artikel",
+        path: "/admin/artikel/kategori",
         pro: false
       },
     ],
@@ -72,8 +72,8 @@ const navigationData: NavigationData[] = [
     name: "Iklan",
     icon: <PageIcon />,
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      { name: "Iklan", path: "/admin/iklan", pro: false },
+      { name: "Buat iklan", path: "/admin/iklan/create", pro: false },
     ],
   },
     {

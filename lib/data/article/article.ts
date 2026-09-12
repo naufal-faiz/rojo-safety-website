@@ -1,6 +1,5 @@
 import { cache } from "react";
 import { prisma } from "../../prisma";
-import { revalidatePath } from "next/cache";
 
 // Get Article Where Status = Published
 export const getPublishedArticles = cache(

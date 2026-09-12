@@ -1,7 +1,7 @@
-import { getAllCategories } from '@/lib/data/article/articleCategory'
+import { getAllArticleCategories } from '@/lib/data/article/articleCategory'
 
 const ArticleCategoryListSection = async () => {
-  const categories = await getAllCategories()
+  const categories = await getAllArticleCategories()
   return (
 
     <div className="animate_top mb-10 rounded-md border border-stroke bg-white p-9 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
