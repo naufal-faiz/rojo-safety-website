@@ -8,7 +8,7 @@ export const getPublishedArticles = cache(
         try {
             return await prisma.article.findMany({
                 where: {
-                    status: "DRAFT",
+                    status: "PUBLISHED",
                     deletedAt: null,
                     ...(options?.categoryName
                         ? { category: { name: options.categoryName } }

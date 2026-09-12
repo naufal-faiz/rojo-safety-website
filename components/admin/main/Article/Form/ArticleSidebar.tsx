@@ -1,7 +1,7 @@
 "use client";
 
-import ThumbnailUpload from "../ThumbnailUpload";
-import { ArticleStatusType, Category, InitialArticle } from "./types";
+import ThumbnailUpload from "./ThumbnailUpload";
+import { ArticleStatusType, Category, InitialArticle } from "@/types";
 
 interface ArticleSidebarProps {
     categories: Category[];

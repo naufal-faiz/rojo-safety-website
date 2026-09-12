@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { deleteArticle } from "./action";
+import { softDeleteArticle } from "./action";
+import { useTableFilter } from "@/hooks/useTableFilter";
+import FilterBar from "@/components/common/FilterBar";
 
 type ArticleItem = {
     id: string;
@@ -23,18 +25,18 @@ export default function ArticleListClient({
     initialArticles: ArticleItem[];
 }) {
     const [articles, setArticles] = useState<ArticleItem[]>(initialArticles);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
     const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
-    const filteredArticles = articles.filter((a) => {
-        const matchesSearch =
-            a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            a.category?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            a.slug.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesStatus =
-            selectedStatus === "ALL" || a.status === selectedStatus;
-        return matchesSearch && matchesStatus;
+    const {
+        searchQuery,
+        setSearchQuery,
+        selectedStatus,
+        setSelectedStatus,
+        filteredData: filteredArticles,
+    } = useTableFilter({
+        data: articles,
+        searchFields: (a) => [a.title, a.slug, a.category?.name ?? ""],
+        statusField: "status",
     });
 
     const handleDelete = async (id: string, title: string) => {
@@ -44,7 +46,7 @@ export default function ArticleListClient({
 
         try {
             setIsDeletingId(id);
-            await deleteArticle(id);
+            await softDeleteArticle(id);
             setArticles((prev) => prev.filter((a) => a.id !== id));
         } catch (err) {
             console.error("Failed to delete article:", err);
@@ -57,43 +59,17 @@ export default function ArticleListClient({
     return (
         <div className="space-y-6">
             {/* Filter Bar */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-                <div className="relative flex-1 max-w-md">
-                    <input
-                        type="text"
-                        placeholder="Cari judul, kategori, atau slug..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full rounded-xl border border-gray-300 bg-gray-50/50 pl-9 pr-4 py-2 text-sm text-gray-800 focus:border-brand-500 focus:bg-white focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
-                    />
-                    <svg
-                        className="w-4 h-4 text-gray-400 absolute left-3 top-2.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                    </svg>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <select
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.target.value)}
-                        className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                    >
-                        <option value="ALL">Semua Status</option>
-                        <option value="PUBLISHED">Dipublikasikan</option>
-                        <option value="DRAFT">Draf</option>
-                    </select>
-                </div>
-            </div>
-
+            <FilterBar searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                searchPlaceholder="Cari judul, kategori, atau slug..."
+                selectedStatus={selectedStatus}
+                onStatusChange={setSelectedStatus}
+                statusOptions={[
+                    { value: "ALL", label: "Semua Status" },
+                    { value: "PUBLISHED", label: "Dipublikasikan" },
+                    { value: "DRAFT", label: "Draf" },
+                ]}
+            />
             {/* Articles Table */}
             <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs dark:border-gray-800 dark:bg-gray-900">
                 <div className="overflow-x-auto">
@@ -165,11 +141,10 @@ export default function ArticleListClient({
                                         {/* Status */}
                                         <td className="px-4 py-3.5 whitespace-nowrap">
                                             <span
-                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                                    article.status === "PUBLISHED"
-                                                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                                                        : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                                                }`}
+                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${article.status === "PUBLISHED"
+                                                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                                                    : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                                                    }`}
                                             >
                                                 {article.status === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
                                             </span>

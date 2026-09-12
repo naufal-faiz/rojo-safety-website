@@ -29,7 +29,8 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hot-toast": "^2.6.0",
-    "swiper": "^14.2.0"
+    "swiper": "^14.2.0",
+    "tiptap-extension-resize-image": "^1.4.7"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

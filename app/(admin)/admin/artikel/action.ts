@@ -18,6 +18,7 @@ type DraftInput = {
 export async function saveDraft(input: DraftInput) {
     const slugValue = input.slug?.trim() || `draft-${Date.now()}`
 
+    // Jika input id tidak null
     if (input.id) {
         const updated = await prisma.article.update({
             where: { id: input.id },
@@ -66,14 +67,17 @@ export async function publishArticle(id: string) {
 }
 
 export async function softDeleteArticle(id: string) {
-    await prisma.article.update({
-        where:{id},
-        data:{
+    const softDeleted = await prisma.article.update({
+        where: { id },
+        data: {
             deletedAt: new Date(),
         }
     })
+    revalidatePath("/admin/artikel")
+    return { success: true, article: softDeleted }
 }
 
+// Tidak disarankan untuk dipakai
 export async function deleteArticle(id: string) {
     await prisma.article.delete({
         where: { id },

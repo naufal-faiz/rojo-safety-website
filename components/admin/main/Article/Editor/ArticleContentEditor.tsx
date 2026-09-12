@@ -2,7 +2,7 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
+import ResizeImage from "tiptap-extension-resize-image";
 import Link from "@tiptap/extension-link";
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -33,10 +33,10 @@ export const ArticleContentEditor = ({
                     levels: [1, 2, 3, 4],
                 },
             }),
-            Image.configure({
+            ResizeImage.configure({
                 inline: true,
                 HTMLAttributes: {
-                    class: "rounded-lg max-w-full h-auto my-4 border border-gray-200 dark:border-gray-700 shadow-sm",
+                    class: "rounded-lg max-w-full h-auto my-4 border border-gray-200 dark:border-gray-700 shadow-sm transition-all",
                 },
             }),
             Link.configure({
@@ -99,13 +99,6 @@ export const ArticleContentEditor = ({
         setShowLinkModal(false);
     };
 
-    const handleAddImageUrl = () => {
-        const url = window.prompt("Masukkan URL Gambar:");
-        if (url && url.trim()) {
-            editor.chain().focus().setImage({ src: url.trim() }).run();
-        }
-    };
-
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -160,7 +153,6 @@ export const ArticleContentEditor = ({
                 editor={editor}
                 isUploadingImage={isUploadingImage}
                 onOpenLinkModal={handleOpenLinkModal}
-                onAddImageUrl={handleAddImageUrl}
                 onUploadClick={() => fileInputRef.current?.click()}
             />
 

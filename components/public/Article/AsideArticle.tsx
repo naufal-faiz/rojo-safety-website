@@ -22,9 +22,9 @@ const AsideArticle = async ({ title, typeFilter }: postCategoryProps) => {
               className="mb-7.5 flex flex-wrap gap-4 xl:flex-nowrap 2xl:gap-6"
               key={article.id}
             >
-              <div className="max-w-45 relative h-18 w-45">
+              <div className="relative h-18 w-28 flex-shrink-0 overflow-hidden rounded">
                 {article.thumbnail ? (
-                  <Image fill src={article.thumbnail} alt={article.title} />
+                  <Image fill src={article.thumbnail} alt={article.title} sizes="96px" className="object-cover" />
                 ) : (
                   "No image"
                 )}
@@ -32,7 +32,7 @@ const AsideArticle = async ({ title, typeFilter }: postCategoryProps) => {
               <h5 className="text-md font-medium text-black transition-all duration-300 hover:text-primary dark:text-white dark:hover:text-primary">
                 <Link href={`/artikel/${article.slug}`}>
                   {" "}
-                  {article.title.slice(0, 40)}...
+                  {article.title.slice(0, 30)}...
                 </Link>
               </h5>
             </div>

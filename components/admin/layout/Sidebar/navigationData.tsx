@@ -21,84 +21,84 @@ export type NavigationData = {
 
 const navigationData: NavigationData[] = [
   {
-    icon: <GridIcon/>,
+    icon: <GridIcon />,
     name: "Dashboard",
     path: "/admin",
   },
   {
-    icon: <CalenderIcon/>,
-    name: "SEO",
-    path: "/admin/seo-settings",
+    name: "Training",
+    icon: <TableIcon />,
+    subItems: [
+      {
+        name: "Kategori",
+        path: "/admin/",
+        pro: false
+      },
+      {
+        name: "Jenis Alat",
+        path: "/admin/",
+        pro: false
+      },
+      {
+        name: "Jadwal",
+        path: "/admin/",
+        pro: false
+      },
+    ],
   },
   {
-    icon: <UserCircleIcon/>,
-    name: "User Profile",
-    path: "/admin/profile",
+    name: "Artikel",
+    icon: <ListIcon />,
+    subItems: [
+      {
+        name: "Artikel",
+        path: "/admin/artikel",
+        pro: false
+      },
+      {
+        name: "Buat Artikel",
+        path: "/admin/artikel/create",
+        pro: false
+      },
+      {
+        name: "Kelola Kategori",
+        path: "/admin/kategori",
+        pro: false
+      },
+    ],
   },
 
   {
-    name: "Artikel",
-    icon: <ListIcon/>,
-    subItems: [
-      { 
-        name: "Artikel", 
-        path: "/admin/artikel", 
-        pro: false 
-      },
-      { 
-        name: "Buat Artikel", 
-        path: "/admin/artikel/create", 
-        pro: false 
-      },
-      { 
-        name: "Kelola Kategori", 
-        path: "/admin/kategori", 
-        pro: false 
-      },
-    ],
-  },
-  {
-    name: "Training",
-    icon: <TableIcon/>,
-    subItems: [
-      { 
-        name: "Kategori", 
-        path: "/admin/", 
-        pro: false 
-      },
-      { 
-        name: "Jenis Alat", 
-        path: "/admin/", 
-        pro: false 
-      },
-      { 
-        name: "Jadwal", 
-        path: "/admin/", 
-        pro: false 
-      },
-    ],
-  },
-  {
-    name: "Halaman Depan",
-    icon: <PageIcon/>,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
-  },
-  {
     name: "Iklan",
-    icon: <PageIcon/>,
+    icon: <PageIcon />,
     subItems: [
       { name: "Blank Page", path: "/blank", pro: false },
       { name: "404 Error", path: "/error-404", pro: false },
     ],
+  },
+    {
+    name: "SEO",
+    icon: <CalenderIcon />,
+    path: "/admin/seo-settings",
   },
 ];
 
 const othersItems: NavigationData[] = [
   {
-    icon: <PieChartIcon/>,
+    icon: <UserCircleIcon />,
+    name: "User Profile",
+    path: "/admin/profile",
+  },
+    {
+    name: "Halaman Depan",
+    icon: <PageIcon />,
+    subItems: [
+      { name: "Blank Page", path: "/blank", pro: false },
+      { name: "404 Error", path: "/error-404", pro: false },
+    ],
+  },
+  {
+    icon: <PieChartIcon />,
     name: "Charts",
     subItems: [
       { name: "Line Chart", path: "/line-chart", pro: false },
@@ -106,7 +106,7 @@ const othersItems: NavigationData[] = [
     ],
   },
   {
-    icon: <BoxCubeIcon/>,
+    icon: <BoxCubeIcon />,
     name: "UI Elements",
     subItems: [
       { name: "Alerts", path: "/alerts", pro: false },
@@ -118,7 +118,7 @@ const othersItems: NavigationData[] = [
     ],
   },
   {
-    icon: <PlugInIcon/>,
+    icon: <PlugInIcon />,
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/signin", pro: false },
@@ -127,4 +127,4 @@ const othersItems: NavigationData[] = [
   },
 ];
 
-export {navigationData, othersItems}
+export { navigationData, othersItems }

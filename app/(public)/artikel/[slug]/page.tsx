@@ -1,4 +1,4 @@
-import RelatedPost from "@/components/public/Article/AsideArticle";
+import AsideArticle from "@/components/public/Article/AsideArticle";
 import { getArticleBySlug } from "@/lib/data/article/article";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
 
   if (!article) return { title: "Artikel tidak ditemukan" }
   return {
-    title: `${article.title} - Rojo Safety`,
+    title: `${article.status !== "PUBLISHED" ? "Artikel tidak ditemukan" : article.title} - Rojo Safety`,
     description: article.excerpt,
     openGraph: {
       title: article.title,
@@ -27,7 +27,7 @@ const SingleArticlePage = async ({ params }: ArticleDetailPageProps) => {
   const { slug } = await params
   const article = await getArticleBySlug(slug)
 
-  if (!article) notFound()
+  if (!article || article.status !== "PUBLISHED") notFound()
 
   return (
     <>
@@ -69,8 +69,8 @@ const SingleArticlePage = async ({ params }: ArticleDetailPageProps) => {
               </div>
               <ArticleCategoryListSection />
               <div className="flex flex-col gap-7.5">
-                <RelatedPost title="Kegiatan Terbaru" typeFilter="berita" />
-                <RelatedPost title="Postingan Terbaru" typeFilter="k3" />
+                <AsideArticle title="Kegiatan Terbaru" typeFilter="berita" />
+                <AsideArticle title="Postingan Terbaru" typeFilter="k3" />
               </div>
             </div>
             <div className="lg:w-2/3">
