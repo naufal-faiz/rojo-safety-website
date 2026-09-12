@@ -1,15 +1,13 @@
 import {
-  BoxCubeIcon,
   CalenderIcon,
-  ChevronDownIcon,
+  DollarLineIcon,
   GridIcon,
-  HorizontaLDots,
   ListIcon,
   PageIcon,
-  PieChartIcon,
-  PlugInIcon,
   TableIcon,
+  TimeIcon,
   UserCircleIcon,
+  VideoIcon,
 } from "@/public/icons/index";
 
 export type NavigationData = {
@@ -27,21 +25,26 @@ const navigationData: NavigationData[] = [
   },
   {
     name: "Training",
-    icon: <TableIcon />,
+    icon: <CalenderIcon />,
     subItems: [
       {
+        name: "Jadwal Training",
+        path: "/admin/jadwal-training",
+        pro: false
+      },
+      {
+        name: "Jenis Kegiatan",
+        path: "/admin/training",
+        pro: false
+      },
+      {
         name: "Kategori",
-        path: "/admin/",
+        path: "/admin/kategori-training",
         pro: false
       },
       {
         name: "Jenis Alat",
-        path: "/admin/",
-        pro: false
-      },
-      {
-        name: "Jadwal",
-        path: "/admin/",
+        path: "/admin/jenis-alat",
         pro: false
       },
     ],
@@ -56,13 +59,8 @@ const navigationData: NavigationData[] = [
         pro: false
       },
       {
-        name: "Buat Artikel",
-        path: "/admin/artikel/create",
-        pro: false
-      },
-      {
-        name: "Kategori Artikel",
-        path: "/admin/artikel/kategori",
+        name: "Kategori",
+        path: "/admin/artikel/kategori-artikel",
         pro: false
       },
     ],
@@ -70,13 +68,13 @@ const navigationData: NavigationData[] = [
 
   {
     name: "Iklan",
-    icon: <PageIcon />,
+    icon: <VideoIcon />,
     subItems: [
       { name: "Iklan", path: "/admin/iklan", pro: false },
       { name: "Buat iklan", path: "/admin/iklan/create", pro: false },
     ],
   },
-    {
+  {
     name: "SEO",
     icon: <CalenderIcon />,
     path: "/admin/seo-settings",
@@ -89,40 +87,19 @@ const othersItems: NavigationData[] = [
     name: "User Profile",
     path: "/admin/profile",
   },
-    {
+  {
     name: "Halaman Depan",
     icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    path: "/admin/landing-page"
   },
   {
-    icon: <PieChartIcon />,
-    name: "Charts",
+    name: "Aktivitas Terbaru",
+    icon: <TimeIcon />,
     subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
-    ],
-  },
-  {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
-    ],
-  },
-  {
-    icon: <PlugInIcon />,
-    name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
+      { name: "Baru Dihapus", path: "/blank", pro: false },
+      // { name: "Kategori Artikel", path: "/error-404", pro: false },
+      // { name: "Training", path: "/error-404", pro: false },
+      // { name: "Kategori Artikel", path: "/error-404", pro: false },
     ],
   },
 ];

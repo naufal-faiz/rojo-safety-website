@@ -9,6 +9,7 @@ import FilterBar from "@/components/common/FilterBar";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/common/Pagination";
 import EmptyState from "@/components/common/EmptyState";
+import { EyeIcon } from "@/public/icons";
 
 type ArticleItem = {
     id: string;
@@ -31,7 +32,8 @@ export default function ArticleListClient({
     const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
     const { searchQuery, setSearchQuery, selectedStatus, setSelectedStatus, filteredData: filteredArticles,
-    } = useTableFilter({ data: articles, searchFields: (a) => [a.title, a.slug, a.category?.name ?? ""], statusField: "status",
+    } = useTableFilter({
+        data: articles, searchFields: (a) => [a.title, a.slug, a.category?.name ?? ""], statusField: "status",
     });
 
     const {
@@ -87,7 +89,7 @@ export default function ArticleListClient({
                             {paginatedArticles.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="px-5 py-12 text-center text-gray-500 dark:text-gray-400">
-                                        <EmptyState title="Tidak ada artikel ditemukan" description="Silakan buat artikel baru atau sesuaikan filter pencarian."/>
+                                        <EmptyState title="Tidak ada artikel ditemukan" description="Silakan buat artikel baru atau sesuaikan filter pencarian." />
                                     </td>
                                 </tr>
                             ) : (
@@ -158,6 +160,9 @@ export default function ArticleListClient({
                                         {/* Actions */}
                                         <td className="px-5 py-3.5 text-right whitespace-nowrap">
                                             <div className="flex items-center justify-end gap-2">
+                                                <Link href={`/admin/artikel/preview/${article.slug}`} className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-blue-light-400 hover:text-blue-light-700 bg-blue-light-50 hover:bg-blue-light-100 dark:bg-blue-light-950/40 dark:text-blue-light-400 dark:hover:bg-blue-light-950/60 rounded-lg transition-colors">
+                                                    <EyeIcon /> Preview
+                                                </Link>
                                                 <Link
                                                     href={`/admin/artikel/${article.id}`}
                                                     className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400 dark:hover:bg-brand-950/60 rounded-lg transition-colors"

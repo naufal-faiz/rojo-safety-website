@@ -34,7 +34,7 @@ export default function ArticleCategoryManager({
     return (
         <div className="space-y-6">
             {/* Form Tambah Kategori Baru */}
-            <div className="mb-10 rounded-md border border-stroke bg-white p-4 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
+            <div className="mb-10 rounded-2xl border border-stroke bg-white p-4 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
                 <h4 className="mb-4 text-lg font-semibold text-black dark:text-white">
                     Tambah Kategori Baru
                 </h4>
@@ -60,7 +60,7 @@ export default function ArticleCategoryManager({
             </div>
             
             {/* Tabel Kategori */}
-            <div className="mb-10 rounded-md border border-stroke bg-white p-4 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
+            <div className="mb-10 rounded-2xl border border-stroke bg-white p-4 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
                 <h4 className="mb-6 text-2xl font-semibold text-black dark:text-white">
                     Kategori
                 </h4>

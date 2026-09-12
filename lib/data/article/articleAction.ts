@@ -8,7 +8,7 @@ type DraftInput = {
     id?: string
     title: string
     slug: string
-    thumbnail?: string
+    thumbnail: string
     content: string
     excerpt?: string
     articleCategoryId: string

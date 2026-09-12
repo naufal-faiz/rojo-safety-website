@@ -14,7 +14,7 @@ export const getPublishedArticles = cache(
                         : {}
                     ),
                 },
-                include: { seo: true },
+                include: { category: true },
                 orderBy: {
                     createdAt: "desc",
                 },
@@ -38,7 +38,7 @@ export const getArticleBySlug = cache(
                 },
                 include: {
                     category: true,
-                    // seo: true
+                    seo: true
                 }
             })
         } catch (err) {
