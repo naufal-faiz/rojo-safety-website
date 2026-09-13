@@ -8,7 +8,7 @@ export async function createArticleCategory(name: string) {
     const created = await prisma.articleCategory.create({
         data: { name: name.trim() }
     })
-    revalidatePath("/admin/artikel/kategori")
+    revalidatePath("/admin/artikel/kategori-artikel")
     return created
 }
 
@@ -18,7 +18,7 @@ export async function updateArticleCategory(id: string, name: string) {
         where: { id },
         data: { name: name.trim(), updatedAt: new Date() }
     })
-    revalidatePath("/admin/artikel/kategori")
+    revalidatePath("/admin/artikel/kategori-artikel")
     return updated
 }
 
@@ -27,13 +27,13 @@ export async function softDeleteArticleCategory(id: string) {
         where: { id },
         data: { deletedAt: new Date() }
     })
-    revalidatePath("/admin/artikel/kategori")
+    revalidatePath("/admin/artikel/kategori-artikel")
     return { success: true, articleCategory: softDeleted }
 }
 
 // Delete after 30 days soft deleted
 export async function hardDeleteArticleCategory(id: string) {
     const deleted = await prisma.articleCategory.delete({ where: { id } })
-    revalidatePath("/admin/artikel/kategori")
+    revalidatePath("/admin/artikel/kategori-artikel")
     return { success: true, articleCategory: deleted }
 }

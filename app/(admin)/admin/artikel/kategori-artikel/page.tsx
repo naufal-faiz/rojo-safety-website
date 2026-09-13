@@ -1,4 +1,4 @@
-import ArticleCategoryManager from "@/components/admin/main/ArticleCategory/ArticleCategoryManager"
+import {ArticleCategoryManager} from "@/components/admin/main/ArticleCategory"
 import { getAllArticleCategories } from "@/lib/data/article/articleCategory"
 
 const CategoryPage = async () => {

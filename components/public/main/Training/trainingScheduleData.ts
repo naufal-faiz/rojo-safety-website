@@ -1,4 +1,4 @@
-import { Training, CertificationType } from "@/types/training/training";
+import { Training } from "@/types";
 
 const trainingData: Training[] = [
     {
@@ -6,7 +6,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-forklift"
     },
@@ -15,7 +15,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-damkar"
     },
@@ -24,7 +24,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-petepeh"
     },
@@ -33,7 +33,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-ruang-terbuka"
     },
@@ -42,7 +42,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-rigger"
     },
@@ -51,7 +51,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-peak-peak"
     },
@@ -60,7 +60,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-angkutan-umum"
     },
@@ -69,7 +69,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-k3-umum"
     },
@@ -78,7 +78,7 @@ const trainingData: Training[] = [
         description: "Pelatihan alat berat jenis Pesawat Angkut Forklift",
         date: "20 September 2026",
         activityDuration: 3,
-        type: CertificationType.kemnaker,
+        type: "KEMNAKER",
         price: "3,500,000",
         slug: "training-kimia"
     },

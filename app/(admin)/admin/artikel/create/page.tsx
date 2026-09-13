@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import ArticleForm from "../ArticleForm";
+import { ArticleForm } from "@/components/admin/main/Article";
 
 const NewArticlePage = async () => {
     const categories = await prisma.articleCategory.findMany({

@@ -3,12 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { softDeleteArticle } from "../../../../lib/data/article/articleAction";
-import { useTableFilter } from "@/hooks/useTableFilter";
-import FilterBar from "@/components/common/FilterBar";
-import { usePagination } from "@/hooks/usePagination";
-import Pagination from "@/components/common/Pagination";
-import EmptyState from "@/components/common/EmptyState";
+import { softDeleteArticle } from "@/lib/data/article/articleAction";
+import { useTableFilter, usePagination } from "@/hooks";
+import {FilterBar,Pagination,EmptyState} from "@/components/common";
 import { EyeIcon } from "@/public/icons";
 
 type ArticleItem = {

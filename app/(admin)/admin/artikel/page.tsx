@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import ArticleListClient from "./ArticleListClient";
+import { ArticleListClient } from "@/components/admin/main/Article";
 
 export const dynamic = "force-dynamic";
 

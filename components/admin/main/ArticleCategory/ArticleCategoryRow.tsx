@@ -5,7 +5,7 @@ import { updateArticleCategory, softDeleteArticleCategory } from "@/lib/data/art
 
 type Category = { id: string; name: string };
 
-export default function ArticleCategoryRow({
+const ArticleCategoryRow =({
     sequence,
     category,
     onUpdated,
@@ -15,7 +15,7 @@ export default function ArticleCategoryRow({
     category: Category;
     onUpdated: (updated: Category) => void;
     onDeleted: (id: string) => void;
-}) {
+}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState(category.name);
     const [isSaving, setIsSaving] = useState(false);
@@ -130,3 +130,5 @@ export default function ArticleCategoryRow({
         </tr>
     );
 }
+
+export default ArticleCategoryRow

@@ -45,8 +45,8 @@ const MainArticlePageSection = ({article}: {article: ArticleWithCategory}) => {
                         </div>
                         <ArticleCategoryListSection />
                         <div className="flex flex-col gap-7.5">
-                            <AsideArticle title="Kegiatan Terbaru" typeFilter="berita" />
-                            <AsideArticle title="Postingan Terbaru" typeFilter="k3" />
+                            <AsideArticle title="Kegiatan Terbaru" typeFilter="Berita" />
+                            <AsideArticle title="Postingan Terbaru" typeFilter="K3" />
                         </div>
                     </div>
                     <div className="lg:w-2/3">

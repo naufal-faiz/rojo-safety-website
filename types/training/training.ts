@@ -1,7 +1,12 @@
-export enum CertificationType {
-    bnsp, kemnaker
+import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums"
+
+export type TrainingCategory = {
+    id: string
+    name: string
+    slug: string
 }
 
+// Hapus kalo udah selesai buat model training
 export type Training = {
     trainingTitle: string
     description: string
@@ -12,16 +17,16 @@ export type Training = {
     slug: string
 }
 
-export type TrainingMaster = {
-    id: number
-    category_id: number
-    seo_id: number
+export type InitialTrainingData = {
+    id: string
     title: string
     slug: string
-    image: string
     description: string
-    certification_type: CertificationType
-    created_at: Date
-    updated_at: Date
-    deleted_at: Date
+    image: string
+    status: PublishedStatus
+    trainingCategoryId: string
+    certificationType: CertificationType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
 }

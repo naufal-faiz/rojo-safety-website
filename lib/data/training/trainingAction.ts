@@ -1,6 +1,6 @@
 "use server"
 
-import { CertificationType } from "@/lib/generated/prisma/enums"
+import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/client"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 
@@ -10,8 +10,9 @@ type DraftInput = {
     slug: string
     image: string
     description: string
-    trainingcategoryId: string
+    trainingCategoryId: string
     certification?: "KEMNAKER" | "BNSP" | "NONE"
+    status?: PublishedStatus
 }
 
 export async function saveDraft(input: DraftInput) {
@@ -25,25 +26,43 @@ export async function saveDraft(input: DraftInput) {
                 slug: slugValue,
                 image: input.image,
                 description: input.description,
-                trainingCategoryId: input.trainingcategoryId,
-                certification: (input.certification as CertificationType) || "NONE"
+                trainingCategoryId: input.trainingCategoryId,
+                certification: (input.certification as CertificationType) || "KEMNAKER",
+                status: (input.status as PublishedStatus) || "DRAFT"
             }
         })
         revalidatePath("/admin/training")
         revalidatePath(`/admin/training/${input.id}`)
         return { id: updated.id, CertificationType: updated.certification }
     }
+
     const created = await prisma.training.create({
         data: {
             title: input.title || "Tanpa Judul",
             slug: slugValue,
             image: input.image || "/images/no-image.jpg",
             description: input.description,
-            trainingCategoryId: input.trainingcategoryId
+            trainingCategoryId: input.trainingCategoryId,
+            Certification: (input.certification as CertificationType) || "KEMNAKER",
+            status: (input.status as PublishedStatus) || "DRAFT"
         }
     })
     revalidatePath("/admin/training")
     return { id: created.id, CertificationType: created.certification }
+}
+
+export async function publishTraining(id: string) {
+    const updated = await prisma.training.update({
+        where: { id },
+        data: {
+            status: "PUBLISHED",
+            publishedAt: new Date(),
+        },
+    })
+    revalidatePath("/admin/training")
+    revalidatePath(`/admin/training/${id}`)
+    revalidatePath("/training")
+    return { success: true, training: updated }
 }
 
 export async function softDeleteTrainingData(id: string) {

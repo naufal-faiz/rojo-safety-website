@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import ArticleForm from "../ArticleForm";
+import {ArticleForm} from "@/components/admin/main/Article";
 import { notFound } from "next/navigation";
 
 type EditArticleProps = { params: Promise<{ id: string }> };

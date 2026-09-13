@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-export function usePagination<T>(data: T[], itemsPerPage: number = 10) {
+export default function usePagination<T>(data: T[], itemsPerPage: number = 10) {
     const [currentPage, setCurrentPage] = useState(1)
     const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage))
 

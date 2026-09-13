@@ -111,25 +111,25 @@ export const ArticleFormHeader = ({
                     )}
                 </div>
 
-                {isPublished ? (
-                    // Artikel sudah publish -> tombol "Simpan Perubahan" menggantikan "Simpan Draf"
+                <div className="flex gap-3">
                     <button
                         type="button"
-                        onClick={onSaveChanges}
-                        disabled={!hasUnsavedChanges || autosaveStatus === "saving"}
-                        className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+                        onClick={onSaveDraft}
+                        className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     >
-                        Simpan Perubahan
+                        Jadikan Draf
                     </button>
-                ) : (
-                    <div className="flex gap-3">
+                    {isPublished ? (
+                        // Artikel sudah publish -> tombol "Simpan Perubahan" menggantikan "Simpan Draf"
                         <button
                             type="button"
-                            onClick={onSaveDraft}
-                            className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                            onClick={onSaveChanges}
+                            disabled={!hasUnsavedChanges || autosaveStatus === "saving"}
+                            className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
                         >
-                            Simpan Draf
+                            Simpan Perubahan
                         </button>
+                    ) : (
                         <button
                             type="button"
                             onClick={onPublish}
@@ -141,9 +141,8 @@ export const ArticleFormHeader = ({
                             )}
                             <span>Publikasikan</span>
                         </button>
-                    </div>
-                )}
-
+                    )}
+                </div>
             </div>
         </div>
     );

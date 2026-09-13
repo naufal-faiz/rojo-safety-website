@@ -1,9 +1,10 @@
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
+import { useDebouncedCallback } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { publishArticle, saveDraft } from "@/lib/data/article/articleAction";
-import { Category, InitialArticle, AutosaveStatus, ArticleStatusType } from "@/types";
+import { Category, InitialArticle, AutosaveStatus } from "@/types";
 import { slugify } from "@/lib/utils/slugify";
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
 
 interface ArticleFormProps {
     categories: Category[];
@@ -34,13 +35,13 @@ const useArticleForm = ({ categories, initialData, articleId }: ArticleFormProps
         initialData?.articleCategoryId || categories[0]?.id || ""
     );
     const [autosaveStatus, setAutosaveStatus] = useState<AutosaveStatus>("idle");
-    const [articleStatus, setArticleStatus] = useState<"DRAFT" | "PUBLISHED" | "ARCHIVED">(
+    const [publishedStatus, setPublishedStatus] = useState<PublishedStatus>(
         initialData?.status || "DRAFT"
     );
     const [isPublishing, setIsPublishing] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
-    const isPublished = articleStatus === "PUBLISHED"
+    const isPublished = publishedStatus === "PUBLISHED"
     const isExisting = Boolean(articleId || initialData?.id)
 
     // Autosave callback (1500ms delay)
@@ -132,7 +133,7 @@ const useArticleForm = ({ categories, initialData, articleId }: ArticleFormProps
                 status: "DRAFT",
             });
             idRef.current = result.id;
-            setArticleStatus("DRAFT");
+            setPublishedStatus("DRAFT");
             setAutosaveStatus("saved");
             if (!articleId) {
                 router.replace(`/admin/artikel/${result.id}`);
@@ -164,11 +165,11 @@ const useArticleForm = ({ categories, initialData, articleId }: ArticleFormProps
             });
 
             await publishArticle(draftResult.id);
-            setArticleStatus("PUBLISHED");
+            setPublishedStatus("PUBLISHED");
             router.push("/admin/artikel");
             router.refresh();
         } catch (err) {
-            console.error("Publish error:", err);
+            console.error("Publish error: ", err);
             alert("Gagal mempublikasikan artikel.");
         } finally {
             setIsPublishing(false);
@@ -190,7 +191,7 @@ const useArticleForm = ({ categories, initialData, articleId }: ArticleFormProps
         // fields
         title, slug, thumbnail, content, excerpt, categoryId,
         // status
-        autosaveStatus, articleStatus, isPublishing, hasUnsavedChanges, isPublished, isExisting,
+        autosaveStatus, publishedStatus, isPublishing, hasUnsavedChanges, isPublished, isExisting,
         // actions
         updateField, handleSaveChanges, handleManualSaveDraft, handlePublish
     }

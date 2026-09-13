@@ -59,7 +59,7 @@ model Article {
   thumbnail         String
   excerpt           String?
   views             Int             @default(0)
-  status            ArticleStatus   @default(DRAFT)
+  status            PublishedStatus @default(DRAFT)
   articleCategoryId String          @map("article_category_id") @db.Uuid
   seoId             String?         @unique @map("seo_id") @db.Uuid
   publishedAt       DateTime?       @map("published_at")
@@ -107,9 +107,11 @@ model Training {
   description        String
   image              String
   certification      CertificationType  @default(KEMNAKER)
+  status             PublishedStatus    @default(DRAFT)
   trainingCategoryId String             @map("training_category_id") @db.Uuid
   seoId              String?            @unique @map("seo_id") @db.Uuid
   createdAt          DateTime           @default(now()) @map("created_at")
+  publishedAt        DateTime?          @map("published_at")
   updatedAt          DateTime           @updatedAt @map("updated_at")
   deletedAt          DateTime?          @map("deleted_at")
   seo                Seo?               @relation(fields: [seoId], references: [id])
@@ -117,6 +119,7 @@ model Training {
   schedules          TrainingSchedule[]
 
   @@index([trainingCategoryId])
+  @@index([status])
   @@map("training")
 }
 
@@ -169,12 +172,12 @@ enum UserRole {
   @@map("user_role")
 }
 
-enum ArticleStatus {
+enum PublishedStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
 
-  @@map("article_status")
+  @@map("published_status")
 }
 
 enum TrainingScheduleType {

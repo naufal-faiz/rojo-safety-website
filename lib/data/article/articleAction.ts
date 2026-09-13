@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { ArticleStatus } from "@/lib/generated/prisma/client"
+import { PublishedStatus } from "@/lib/generated/prisma/client"
 
 type DraftInput = {
     id?: string
@@ -12,7 +12,7 @@ type DraftInput = {
     content: string
     excerpt?: string
     articleCategoryId: string
-    status?: "DRAFT" | "PUBLISHED" | "ARCHIVED"
+    status?: PublishedStatus
 }
 
 export async function saveDraft(input: DraftInput) {
@@ -28,7 +28,7 @@ export async function saveDraft(input: DraftInput) {
                 thumbnail: input.thumbnail,
                 content: input.content,
                 excerpt: input.excerpt,
-                status: (input.status as ArticleStatus) || "DRAFT",
+                status: (input.status as PublishedStatus) || "DRAFT",
                 articleCategoryId: input.articleCategoryId,
             },
         })
@@ -44,7 +44,7 @@ export async function saveDraft(input: DraftInput) {
             thumbnail: input.thumbnail || "/images/no-image.jpg",
             content: input.content || "",
             excerpt: input.excerpt || "",
-            status: (input.status as ArticleStatus) || "DRAFT",
+            status: (input.status as PublishedStatus) || "DRAFT",
             articleCategoryId: input.articleCategoryId,
         },
     })

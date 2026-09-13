@@ -6,7 +6,7 @@ type UseTableFilterOptions<T> = {
     statusField?: keyof T
 }
 
-export function useTableFilter<T>({data, searchFields, statusField}: UseTableFilterOptions<T>) {
+export default function useTableFilter<T>({data, searchFields, statusField}: UseTableFilterOptions<T>) {
     const [searchQuery, setSearchQuery] = useState("")
     const [selectedStatus, setSelectedStatus] = useState<string>("ALL")
 

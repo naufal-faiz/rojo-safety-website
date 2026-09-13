@@ -2,7 +2,7 @@
 CREATE TYPE "user_role" AS ENUM ('ADMIN', 'USER');
 
 -- CreateEnum
-CREATE TYPE "article_status" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
+CREATE TYPE "published_status" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
 
 -- CreateEnum
 CREATE TYPE "training_schedule_type" AS ENUM ('PUBLIC', 'INHOUSE');
@@ -72,10 +72,10 @@ CREATE TABLE "article" (
     "title" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "thumbnail" TEXT,
+    "thumbnail" TEXT NOT NULL,
     "excerpt" TEXT,
     "views" INTEGER NOT NULL DEFAULT 0,
-    "status" "article_status" NOT NULL DEFAULT 'DRAFT',
+    "status" "published_status" NOT NULL DEFAULT 'DRAFT',
     "article_category_id" UUID NOT NULL,
     "seo_id" UUID,
     "published_at" TIMESTAMP(3),
@@ -115,11 +115,13 @@ CREATE TABLE "training" (
     "title" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "image" TEXT,
+    "image" TEXT NOT NULL,
     "certification" "certification_type" NOT NULL DEFAULT 'KEMNAKER',
+    "status" "published_status" NOT NULL DEFAULT 'DRAFT',
     "training_category_id" UUID NOT NULL,
     "seo_id" UUID,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "published_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
 
@@ -194,6 +196,9 @@ CREATE UNIQUE INDEX "training_seo_id_key" ON "training"("seo_id");
 CREATE INDEX "training_training_category_id_idx" ON "training"("training_category_id");
 
 -- CreateIndex
+CREATE INDEX "training_status_idx" ON "training"("status");
+
+-- CreateIndex
 CREATE INDEX "training_schedule_training_id_idx" ON "training_schedule"("training_id");
 
 -- CreateIndex
@@ -218,10 +223,10 @@ ALTER TABLE "article" ADD CONSTRAINT "article_seo_id_fkey" FOREIGN KEY ("seo_id"
 ALTER TABLE "heavy_equipment" ADD CONSTRAINT "heavy_equipment_training_category_id_fkey" FOREIGN KEY ("training_category_id") REFERENCES "training_category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "training" ADD CONSTRAINT "training_training_category_id_fkey" FOREIGN KEY ("training_category_id") REFERENCES "training_category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "training" ADD CONSTRAINT "training_seo_id_fkey" FOREIGN KEY ("seo_id") REFERENCES "seo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "training" ADD CONSTRAINT "training_seo_id_fkey" FOREIGN KEY ("seo_id") REFERENCES "seo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "training" ADD CONSTRAINT "training_training_category_id_fkey" FOREIGN KEY ("training_category_id") REFERENCES "training_category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "training_schedule" ADD CONSTRAINT "training_schedule_training_id_fkey" FOREIGN KEY ("training_id") REFERENCES "training"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

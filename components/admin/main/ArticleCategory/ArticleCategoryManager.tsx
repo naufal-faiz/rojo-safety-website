@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { createArticleCategory } from "@/lib/data/article/articleCategoryAction";
-import ArticleCategoryRow from "./ArticleCategoryRow";
+import {ArticleCategoryRow} from "./";
 
 type Category = { id: string; name: string };
 
-export default function ArticleCategoryManager({
+const ArticleCategoryManager =({
     initialCategories,
 }: {
     initialCategories: Category[];
-}) {
+}) => {
     const [categories, setCategories] = useState<Category[]>(initialCategories);
     const [newName, setNewName] = useState("");
     const [isCreating, setIsCreating] = useState(false);
@@ -103,3 +103,5 @@ export default function ArticleCategoryManager({
         </div>
     );
 }
+
+export default ArticleCategoryManager

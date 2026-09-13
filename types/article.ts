@@ -1,9 +1,9 @@
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
+
 export type Category = {
     id: string;
     name: string;
 };
-
-export type ArticleStatusType = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 
 export type InitialArticle = {
     id: string;
@@ -13,7 +13,7 @@ export type InitialArticle = {
     thumbnail?: string | null;
     excerpt?: string | null;
     articleCategoryId: string;
-    status: ArticleStatusType;
+    status: PublishedStatus;
     views?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -29,4 +29,3 @@ export type ArticleFormData = {
     categoryId: string;
 };
 
-export type AutosaveStatus = "idle" | "saving" | "saved" | "error";

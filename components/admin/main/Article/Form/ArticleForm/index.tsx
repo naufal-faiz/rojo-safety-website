@@ -2,7 +2,7 @@
 
 import { ArticleContentEditor, ArticleFormHeader, ArticleSidebar, ArticleTitleSlug } from "@/components/admin/main/Article";
 import { Category, InitialArticle } from "@/types";
-import useArticleForm from "./useArticleForm";
+import { useArticleForm } from "@/hooks";
 
 interface ArticleFormProps {
     categories: Category[];
@@ -13,7 +13,7 @@ interface ArticleFormProps {
 const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) => {
     const {
         title, slug, thumbnail, content, excerpt,
-        categoryId, autosaveStatus, articleStatus,
+        categoryId, autosaveStatus, publishedStatus,
         isPublishing, hasUnsavedChanges, isPublished,
         isExisting, updateField, handleSaveChanges,
         handleManualSaveDraft, handlePublish
@@ -24,7 +24,7 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
             {/* Top Action Header */}
             <ArticleFormHeader
                 isExisting={isExisting}
-                articleStatus={articleStatus}
+                articleStatus={publishedStatus}
                 autosaveStatus={autosaveStatus}
                 isPublishing={isPublishing}
                 isPublished={isPublished}
@@ -89,7 +89,7 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
                     categories={categories}
                     categoryId={categoryId}
                     thumbnail={thumbnail}
-                    articleStatus={articleStatus}
+                    articleStatus={publishedStatus}
                     initialData={initialData}
                     title={title}
                     slug={slug}
