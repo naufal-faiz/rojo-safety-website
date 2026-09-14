@@ -1,4 +1,5 @@
 import { ArticleListClient } from "@/components/admin/main/Article";
+import { getAllArticlesForAdmin } from "@/lib/data/article";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
@@ -6,11 +7,7 @@ export const dynamic = "force-dynamic";
 
 const ArticlesPage = async () => {
     const [articles, totalCount, publishedCount, draftCount] = await Promise.all([
-        prisma.article.findMany({
-            where: { deletedAt: null },
-            include: { category: true },
-            orderBy: { updatedAt: "desc" },
-        }),
+        getAllArticlesForAdmin(),
         prisma.article.count({ where: { deletedAt: null } }),
         prisma.article.count({ where: { deletedAt: null, status: "PUBLISHED" } }),
         prisma.article.count({ where: { deletedAt: null, status: "DRAFT" } }),

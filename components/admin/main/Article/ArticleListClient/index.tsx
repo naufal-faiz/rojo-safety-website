@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { softDeleteArticle } from "@/lib/data/article/articleAction";
+import { softDeleteArticle } from "@/lib/data/article";
 import { useTableFilter, usePagination } from "@/hooks";
 import {FilterBar,Pagination,EmptyState} from "@/components/common";
 import { EyeIcon } from "@/public/icons";

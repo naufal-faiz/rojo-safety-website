@@ -1,6 +1,7 @@
-import { prisma } from "@/lib/prisma";
-import {ArticleForm} from "@/components/admin/main/Article";
+import { ArticleForm } from "@/components/admin/main/Article";
 import { notFound } from "next/navigation";
+import { getAllArticleCategories } from "@/lib/data/article";
+import { getArticleById } from "@/lib/data/article";
 
 type EditArticleProps = { params: Promise<{ id: string }> };
 
@@ -8,13 +9,8 @@ const EditArticlePage = async ({ params }: EditArticleProps) => {
     const { id } = await params;
 
     const [categories, article] = await Promise.all([
-        prisma.articleCategory.findMany({
-            orderBy: { name: "desc" },
-        }),
-        prisma.article.findUnique({
-            where: { id },
-            include: { category: true },
-        }),
+        getAllArticleCategories(),
+        getArticleById(id)
     ]);
 
     if (!article) {

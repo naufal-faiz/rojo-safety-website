@@ -1,5 +1,5 @@
-import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
-import { getTrainingById } from "@/lib/data/training/training";
+import { getAllTrainingCategories } from "@/lib/data/training";
+import { getTrainingById } from "@/lib/data/training";
 import { TrainingForm } from "@/components/admin/main/Training";
 import { notFound } from "next/navigation";
 

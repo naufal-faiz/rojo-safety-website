@@ -59,3 +59,12 @@ export const getAllTrainingsForAdmin = cache(async () => {
         return []
     }
 })
+
+export const getTotalTrainings = cache(async () => {
+    try {
+        return await prisma.training.count()
+    } catch (err) {
+        console.error("failed to fetch total data: ", err)
+        return null
+    }
+})

@@ -1,11 +1,7 @@
-import { Article, Prisma } from '@/lib/generated/prisma/client'
 import ArticleDetail from "./ArticleDetail";
 import ArticleCategoryListSection from "./ArticleCategoryListSection";
 import AsideArticle from "@/components/public/Article/AsideArticle";
-
-export type ArticleWithCategory = Prisma.ArticleGetPayload<{
-    include: { category: true };
-}>;
+import { ArticleWithCategory } from '@/types';
 
 const MainArticlePageSection = ({article}: {article: ArticleWithCategory}) => {
     return (

@@ -1,13 +1,7 @@
 import usePublishableForm from "./usePublishableForm";
-import { publishArticle, saveDraft } from "@/lib/data/article/articleAction";
-import { Category, InitialArticle } from "@/types";
+import { publishArticle, saveDraft } from "@/lib/data/article";
 import { slugify } from "@/lib/utils/slugify";
-
-interface ArticleFormProps {
-    categories: Category[];
-    initialData?: InitialArticle | null;
-    articleId?: string;
-}
+import { ArticleFormProps } from "@/types";
 
 type ArticleFields = {
     title: string;

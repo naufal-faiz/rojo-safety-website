@@ -90,6 +90,7 @@ CREATE TABLE "article" (
 CREATE TABLE "training_category" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
@@ -182,6 +183,9 @@ CREATE INDEX "article_article_category_id_idx" ON "article"("article_category_id
 
 -- CreateIndex
 CREATE INDEX "article_status_idx" ON "article"("status");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "training_category_slug_key" ON "training_category"("slug");
 
 -- CreateIndex
 CREATE INDEX "heavy_equipment_training_category_id_idx" ON "heavy_equipment"("training_category_id");

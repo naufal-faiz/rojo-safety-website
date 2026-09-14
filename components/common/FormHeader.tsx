@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { PublishedStatus } from "@/lib/generated/prisma/enums";
-import { AutosaveStatus } from "@/hooks/usePublishableForm";
+import { AutosaveStatus } from "@/types";
 
 interface FormHeaderProps {
     title: string
+    backHref: string
     isExisting: boolean;
     subtitleEdit: string
     subtitleCreate: string
@@ -21,6 +22,7 @@ interface FormHeaderProps {
 
 export const FormHeader = ({
     title,
+    backHref,
     isExisting,
     subtitleEdit,
     subtitleCreate,
@@ -37,7 +39,7 @@ export const FormHeader = ({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white dark:bg-gray-900 p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
             <div className="flex items-center gap-3">
                 <Link
-                    href={`/admin/${title.toLocaleLowerCase()}`}
+                    href={`/admin/${backHref}`}
                     className="flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors"
                     title={`Kembali ke Daftar ${title}`}
                 >

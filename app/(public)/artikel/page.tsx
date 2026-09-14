@@ -1,5 +1,5 @@
 import ArticleItem from "@/components/public/Article/ArticleItem";
-import { getPublishedArticles } from "@/lib/data/article/article";
+import { getPublishedArticles } from "@/lib/data/article";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

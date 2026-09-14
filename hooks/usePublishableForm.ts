@@ -2,8 +2,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import useDebouncedCallback from "./useDebouncedCallback";
 import { PublishedStatus } from "@/lib/generated/prisma/enums";
-
-export type AutosaveStatus = "idle" | "saving" | "saved" | "error";
+import { AutosaveStatus } from "@/types";
 
 interface UsePublishableFormConfig<TFields extends Record<string, unknown>> {
     initialId?: string;

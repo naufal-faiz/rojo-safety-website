@@ -47,3 +47,37 @@ export const getArticleBySlug = cache(
         }
     }
 )
+
+export const getArticleById = cache(async (id: string) => {
+    try {
+        return await prisma.article.findUnique({
+            where: {id},
+            include: {category: true}
+        })
+    } catch (err) {
+        console.error("Failed to fetch training by id: ", err)
+        return null
+    }
+})
+
+export const getAllArticlesForAdmin = cache(async () => {
+    try {
+        return await prisma.article.findMany({
+            where: { deletedAt: null },
+            include: { category: true },
+            orderBy: { updatedAt: "desc" },
+        });
+    } catch (err) {
+        console.error("Failed to fetch articles for admin: ", err);
+        return [];
+    }
+});
+
+export const getTotalArticles = cache(async () => {
+    try {
+        return await prisma.article.count()
+    } catch (err) {
+        console.error("failed to fetch total data: ", err)
+        return null
+    }
+})

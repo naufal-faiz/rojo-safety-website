@@ -2,10 +2,10 @@
 
 import { PublishedStatus } from "@/lib/generated/prisma/enums";
 import ThumbnailUpload from "./ThumbnailUpload";
-import { Category, InitialArticle } from "@/types";
+import { ArticleCategory, InitialArticle } from "@/types";
 
 interface ArticleSidebarProps {
-    categories: Category[];
+    categories: ArticleCategory[];
     categoryId: string;
     thumbnail: string;
     articleStatus: PublishedStatus;

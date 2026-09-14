@@ -1,12 +1,8 @@
 import SharePost from "@/components/public/Article/SharePost";
-import { Prisma } from "@/lib/generated/prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
-
-export type ArticleWithCategory = Prisma.ArticleGetPayload<{
-    include: { category: true };
-}>;
+import { ArticleWithCategory } from "@/types";
 
 const ArticleDetail = ({ article }: { article: ArticleWithCategory }) => {
     const formattedDate = article.createdAt

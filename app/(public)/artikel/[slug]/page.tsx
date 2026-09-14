@@ -1,4 +1,4 @@
-import { getArticleBySlug } from "@/lib/data/article/article";
+import { getArticleBySlug } from "@/lib/data/article";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import MainArticlePageSection from "./MainArticlePageSection";

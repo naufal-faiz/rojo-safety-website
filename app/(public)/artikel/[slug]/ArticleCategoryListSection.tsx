@@ -1,4 +1,4 @@
-import { getAllArticleCategories } from '@/lib/data/article/articleCategory'
+import { getAllArticleCategories } from '@/lib/data/article'
 
 const ArticleCategoryListSection = async () => {
   const categories = await getAllArticleCategories()

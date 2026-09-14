@@ -39,7 +39,7 @@ const navigationData: NavigationData[] = [
       },
       {
         name: "Kategori",
-        path: "/admin/kategori-training",
+        path: "/admin/training/kategori-training",
         pro: false
       },
       {

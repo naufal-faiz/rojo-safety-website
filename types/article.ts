@@ -1,9 +1,20 @@
+import { Prisma } from "@/lib/generated/prisma/client";
 import { PublishedStatus } from "@/lib/generated/prisma/enums";
 
-export type Category = {
+export type ArticleCategory = {
     id: string;
     name: string;
 };
+
+export type ArticleWithCategory = Prisma.ArticleGetPayload<{
+    include: { category: true };
+}>;
+
+export type ArticleFormProps = {
+    categories: ArticleCategory[];
+    initialData?: InitialArticle | null;
+    articleId?: string;
+}
 
 export type InitialArticle = {
     id: string;

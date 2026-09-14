@@ -23,6 +23,7 @@ const TrainingForm = ({ categories, initialData, trainingId }: TrainingFormProps
         <div className="space-y-6 max-w-(--breakpoint-2xl) mx-auto pb-16">
             <FormHeader
                 title="Training"
+                backHref="training"
                 isExisting={isExisting}
                 subtitleEdit="Perbarui detail atau status publikasi training"
                 subtitleCreate="Buat data training K3 atau sertifikasi alat berat baru"

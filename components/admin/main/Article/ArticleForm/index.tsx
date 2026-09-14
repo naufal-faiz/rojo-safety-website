@@ -1,15 +1,9 @@
 "use client";
 
 import { ArticleContentEditor, ArticleSidebar } from "@/components/admin/main/Article";
-import { Category, InitialArticle } from "@/types";
+import { ArticleFormProps } from "@/types";
 import { useArticleForm } from "@/hooks";
 import { FormHeader, TitleSlugField } from "@/components/common";
-
-interface ArticleFormProps {
-    categories: Category[];
-    initialData?: InitialArticle | null;
-    articleId?: string;
-}
 
 const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) => {
     const {
@@ -25,6 +19,7 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
             {/* Top Action Header */}
             <FormHeader
                 title="Artikel"
+                backHref="artikel"
                 isExisting={isExisting}
                 subtitleEdit="Perbarui konten atau detail publikasi artikel"
                 subtitleCreate="Tulis artikel edukasi atau promosi seputar K3 dan alat berat"

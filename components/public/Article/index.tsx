@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SectionHeader from "../Common/SectionHeader";
 import ArticleItem from "./ArticleItem";
-import { getPublishedArticles } from "@/lib/data/article/article";
+import { getPublishedArticles } from "@/lib/data/article";
 
 const Article = async () => {
   const articles = await getPublishedArticles()

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { getAllTrainingsForAdmin } from "@/lib/data/training/training";
+import { getAllTrainingsForAdmin } from "@/lib/data/training";
 import { TrainingListClient } from "@/components/admin/main/Training";
 
 export const dynamic = "force-dynamic";

@@ -1,5 +1,5 @@
 import MainArticlePageSection from "@/app/(public)/artikel/[slug]/MainArticlePageSection"
-import { getArticleBySlug } from "@/lib/data/article/article"
+import { getArticleBySlug } from "@/lib/data/article"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
