@@ -1,37 +1,41 @@
 "use client";
 
-import { PublishedStatus } from "@/lib/generated/prisma/enums";
-import ThumbnailUpload from "./ThumbnailUpload";
-import { Category, InitialArticle } from "@/types";
+import TrainingImageUpload from "./TrainingImageUpload";
+import { TrainingCategory, InitialTrainingData } from "@/types";
+import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums";
 
-interface ArticleSidebarProps {
-    categories: Category[];
+const CERTIFICATION_OPTIONS: { value: CertificationType; label: string }[] = [
+    { value: "KEMNAKER", label: "Kemnaker" },
+    { value: "BNSP", label: "BNSP" },
+    { value: "NONE", label: "Tanpa Sertifikasi" },
+];
+
+interface TrainingSidebarProps {
+    categories: TrainingCategory[];
     categoryId: string;
-    thumbnail: string;
-    articleStatus: PublishedStatus;
-    initialData?: InitialArticle | null;
-    title: string;
-    slug: string;
-    excerpt: string;
+    certification: CertificationType;
+    image: string;
+    trainingStatus: PublishedStatus;
+    initialData?: InitialTrainingData | null;
     onCategoryChange: (categoryId: string) => void;
-    onThumbnailChange: (thumbnailUrl: string) => void;
+    onCertificationChange: (certification: CertificationType) => void;
+    onImageChange: (imageUrl: string) => void;
 }
 
-export const ArticleSidebar = ({
+export const TrainingSidebar = ({
     categories,
     categoryId,
-    thumbnail,
-    articleStatus,
+    certification,
+    image,
+    trainingStatus,
     initialData,
-    title,
-    slug,
-    excerpt,
     onCategoryChange,
-    onThumbnailChange,
-}: ArticleSidebarProps) => {
+    onCertificationChange,
+    onImageChange,
+}: TrainingSidebarProps) => {
     return (
         <div className="lg:col-span-4 space-y-6">
-            {/* Publication & Status Card */}
+            {/* Status & Publikasi */}
             <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">
                     Status & Publikasi
@@ -40,17 +44,9 @@ export const ArticleSidebar = ({
                     <div className="flex items-center justify-between">
                         <span className="text-gray-500 dark:text-gray-400">Status Saat Ini:</span>
                         <span className="font-semibold text-gray-800 dark:text-gray-200">
-                            {articleStatus === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
+                            {trainingStatus === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
                         </span>
                     </div>
-                    {initialData?.views !== undefined && (
-                        <div className="flex items-center justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Total Dilihat:</span>
-                            <span className="font-semibold text-gray-800 dark:text-gray-200">
-                                {initialData.views} views
-                            </span>
-                        </div>
-                    )}
                     {initialData?.createdAt && (
                         <div className="flex items-center justify-between">
                             <span className="text-gray-500 dark:text-gray-400">Dibuat:</span>
@@ -80,10 +76,10 @@ export const ArticleSidebar = ({
                 </div>
             </div>
 
-            {/* Category Selection Card */}
+            {/* Kategori */}
             <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">
-                    Kategori Artikel <span className="text-red-500">*</span>
+                    Kategori Training <span className="text-red-500">*</span>
                 </h3>
                 <div>
                     {categories.length > 0 ? (
@@ -100,41 +96,38 @@ export const ArticleSidebar = ({
                         </select>
                     ) : (
                         <p className="text-xs text-amber-600 dark:text-amber-400">
-                            Belum ada kategori yang dibuat.
+                            Belum ada kategori training yang dibuat.
                         </p>
                     )}
                 </div>
             </div>
 
-            {/* Thumbnail Card */}
+            {/* Sertifikasi */}
+            <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">
+                    Jenis Sertifikasi
+                </h3>
+                <select
+                    value={certification}
+                    onChange={(e) => onCertificationChange(e.target.value as CertificationType)}
+                    className="w-full rounded-xl border border-gray-300 bg-white p-2.5 text-sm text-gray-800 focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                >
+                    {CERTIFICATION_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Gambar */}
             <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
                 <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                        Gambar Utama (Thumbnail)
+                        Gambar Training
                     </h3>
                 </div>
-                <ThumbnailUpload
-                    value={thumbnail}
-                    onChange={onThumbnailChange}
-                />
-            </div>
-
-            {/* Search / Social Snippet Preview */}
-            <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-3">
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">
-                    Pratinjau Hasil Pencarian (SEO)
-                </h3>
-                <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 space-y-1 text-xs">
-                    <div className="text-blue-600 dark:text-blue-400 font-medium line-clamp-1 text-sm">
-                        {title || "Judul Artikel Anda"}
-                    </div>
-                    <div className="text-green-700 dark:text-green-500 text-[11px] truncate">
-                        https://rojosafety.com/artikel/{slug || "slug-artikel"}
-                    </div>
-                    <div className="text-gray-600 dark:text-gray-400 text-xs line-clamp-2">
-                        {excerpt || "Ringkasan artikel akan tampil di sini sebagai deskripsi hasil pencarian mesin pencari..."}
-                    </div>
-                </div>
+                <TrainingImageUpload value={image} onChange={onImageChange} />
             </div>
         </div>
     );

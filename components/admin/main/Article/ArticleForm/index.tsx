@@ -1,8 +1,9 @@
 "use client";
 
-import { ArticleContentEditor, ArticleFormHeader, ArticleSidebar, ArticleTitleSlug } from "@/components/admin/main/Article";
+import { ArticleContentEditor, ArticleSidebar } from "@/components/admin/main/Article";
 import { Category, InitialArticle } from "@/types";
 import { useArticleForm } from "@/hooks";
+import { FormHeader, TitleSlugField } from "@/components/common";
 
 interface ArticleFormProps {
     categories: Category[];
@@ -22,9 +23,12 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
     return (
         <div className="space-y-6 max-w-(--breakpoint-2xl) mx-auto pb-16">
             {/* Top Action Header */}
-            <ArticleFormHeader
+            <FormHeader
+                title="Artikel"
                 isExisting={isExisting}
-                articleStatus={publishedStatus}
+                subtitleEdit="Perbarui konten atau detail publikasi artikel"
+                subtitleCreate="Tulis artikel edukasi atau promosi seputar K3 dan alat berat"
+                publishedStatus={publishedStatus}
                 autosaveStatus={autosaveStatus}
                 isPublishing={isPublishing}
                 isPublished={isPublished}
@@ -39,9 +43,11 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
                 {/* Main Content Area (8 Cols) */}
                 <div className="lg:col-span-8 space-y-6">
                     {/* Title & Permalink Slug */}
-                    <ArticleTitleSlug
+                    <TitleSlugField
                         title={title}
                         slug={slug}
+                        basePath="/artikel/"
+                        titleLabel="Judul Artikel"
                         onTitleChange={(newTitle, newSlug) =>
                             updateField({ title: newTitle, slug: newSlug })
                         }

@@ -3,30 +3,36 @@
 import { slugify } from "@/lib/utils/slugify";
 import { useState } from "react";
 
-interface ArticleTitleSlugProps {
+interface TitleSlugFieldProps {
     title: string;
     slug: string;
+    basePath: string; // contoh: "/training/" atau "/artikel/"
+    titleLabel?: string;
+    titlePlaceholder?: string;
     onTitleChange: (newTitle: string, newSlug: string) => void;
     onSlugChange: (newSlug: string) => void;
 }
 
-export const ArticleTitleSlug = ({
+const TitleSlugField = ({
     title,
     slug,
+    basePath,
+    titleLabel = "Judul",
+    titlePlaceholder = "Masukkan judul yang menarik...",
     onTitleChange,
     onSlugChange,
-}: ArticleTitleSlugProps) => {
+}: TitleSlugFieldProps) => {
     const [isEditingSlug, setIsEditingSlug] = useState(false);
 
     return (
         <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
             <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5">
-                    Judul Artikel <span className="text-red-500">*</span>
+                    {titleLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
                     className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg font-semibold text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                    placeholder="Masukkan judul artikel yang menarik..."
+                    placeholder={titlePlaceholder}
                     value={title}
                     onChange={(e) => {
                         const newTitle = e.target.value;
@@ -36,10 +42,9 @@ export const ArticleTitleSlug = ({
                 />
             </div>
 
-            {/* Permalink / Slug */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
                 <span className="font-medium text-gray-500">Permalink:</span>
-                <span className="text-gray-400">/artikel/</span>
+                <span className="text-gray-400">{basePath}</span>
                 {isEditingSlug ? (
                     <div className="flex items-center gap-2 flex-1 min-w-[200px]">
                         <input
@@ -74,3 +79,5 @@ export const ArticleTitleSlug = ({
         </div>
     );
 };
+
+export default TitleSlugField;

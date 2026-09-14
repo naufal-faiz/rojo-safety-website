@@ -1,15 +1,15 @@
 "use client";
 
-import { UploadError, uploadImage } from "@/lib/supabase/uploadImage";
+import { uploadImage, UploadError } from "@/lib/supabase/uploadImage";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-type ThumbnailUploadProps = {
+type TrainingImageUploadProps = {
     value?: string | null;
     onChange: (url: string) => void;
-}
+};
 
-const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
+const TrainingImageUpload = ({ value, onChange }: TrainingImageUploadProps) => {
     const [uploading, setUploading] = useState(false);
     const [dragOver, setDragOver] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,32 +18,32 @@ const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
         if (!file) return;
 
         try {
-            setUploading(true)
-            const publicUrl = await uploadImage(file, "articles", "article")
-            onChange(publicUrl)
+            setUploading(true);
+            const publicUrl = await uploadImage(file, "trainings", "training");
+            onChange(publicUrl);
         } catch (err) {
-            const message = err instanceof UploadError ? err.message : "Terjadi kesalahan saat mengunggah gambar."
-            console.error("Article image upload error: ", err)
-            alert(message)
+            const message = err instanceof UploadError ? err.message : "Terjadi kesalahan saat mengunggah gambar.";
+            console.error("Training image upload error: ", err);
+            alert(message);
         } finally {
-            setUploading(false)
-            if (fileInputRef.current) fileInputRef.current.value = ""
+            setUploading(false);
+            if (fileInputRef.current) fileInputRef.current.value = "";
         }
-    }
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) handleFileUpload(file)
-    }
+        const file = e.target.files?.[0];
+        if (file) handleFileUpload(file);
+    };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setDragOver(false)
-        const file = e.dataTransfer.files?.[0]
-        if (file) handleFileUpload(file)
-    }
+        e.preventDefault();
+        setDragOver(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) handleFileUpload(file);
+    };
 
-    const hasCustomThumbnail = value && value !== "/images/no-image.jpg" && value !== "";
+    const hasCustomImage = value && value !== "/images/no-image.jpg" && value !== "";
 
     return (
         <div className="space-y-3">
@@ -56,18 +56,17 @@ const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
                 className="hidden"
             />
 
-            {hasCustomThumbnail ? (
+            {hasCustomImage ? (
                 <div className="relative group overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-800">
                     <div className="relative aspect-video w-full">
                         <Image
                             src={value!}
-                            alt="Thumbnail Artikel"
+                            alt="Gambar Training"
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                             sizes="(max-width: 768px) 100vw, 400px"
                         />
                     </div>
-                    {/* Hover Overlay Controls */}
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
                         <button
                             type="button"
@@ -96,14 +95,14 @@ const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
                     className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${dragOver
-                            ? "border-brand-500 bg-brand-50/40 dark:bg-brand-950/20"
-                            : "border-gray-300 dark:border-gray-700 hover:border-brand-400 bg-gray-50/50 dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800"
+                        ? "border-brand-500 bg-brand-50/40 dark:bg-brand-950/20"
+                        : "border-gray-300 dark:border-gray-700 hover:border-brand-400 bg-gray-50/50 dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800"
                         }`}
                 >
                     {uploading ? (
                         <div className="flex flex-col items-center justify-center gap-2 py-4">
                             <span className="animate-spin size-6 border-2 border-brand-500 border-t-transparent rounded-full" />
-                            <p className="text-xs text-gray-500 dark:text-gray-400">Mengunggah thumbnail...</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Mengunggah gambar...</p>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center gap-2 py-2">
@@ -119,7 +118,7 @@ const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
                             </div>
                             <div>
                                 <p className="text-xs font-semibold text-gray-800 dark:text-gray-200">
-                                    Unggah thumbnail artikel
+                                    Unggah gambar training
                                 </p>
                                 <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
                                     Klik atau seret file ke sini (PNG, JPG, WebP)
@@ -133,4 +132,4 @@ const ThumbnailUpload = ({ value, onChange }: ThumbnailUploadProps) => {
     );
 };
 
-export default ThumbnailUpload;
+export default TrainingImageUpload;

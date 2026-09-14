@@ -5,10 +5,10 @@ import StarterKit from "@tiptap/starter-kit";
 import ResizeImage from "tiptap-extension-resize-image";
 import Link from "@tiptap/extension-link";
 import { useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { EditorToolbar } from "./EditorToolbar";
 import { EditorLinkModal } from "./EditorLinkModal";
 import { EditorStats } from "./EditorStats";
+import { UploadError, uploadImage } from "@/lib/supabase/uploadImage";
 
 export interface ArticleContentEditorProps {
     value: string;
@@ -105,31 +105,16 @@ export const ArticleContentEditor = ({
 
         try {
             setIsUploadingImage(true);
-            const supabase = createClient();
-            const fileExt = file.name.split(".").pop();
-            const fileName = `content-${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
-
-            const { error: uploadError } = await supabase.storage
-                .from("articles")
-                .upload(fileName, file);
-
-            if (uploadError) {
-                alert("Gagal mengunggah gambar: " + uploadError.message);
-                return;
-            }
-
-            const { data } = supabase.storage.from("articles").getPublicUrl(fileName);
-            if (data?.publicUrl) {
-                editor.chain().focus().setImage({ src: data.publicUrl }).run();
-            }
+            const publicUrl = await uploadImage(file, "articles", "content")
+            editor.chain().focus().setImage({ src: publicUrl }).run();
         } catch (err) {
+            const message = err instanceof UploadError ? err.message : "terjadi kesalahan saat mengunggah gambar."
             console.error("Upload error:", err);
-            alert("Terjadi kesalahan saat mengunggah gambar.");
+            alert(message);
         } finally {
             setIsUploadingImage(false);
-            if (fileInputRef.current) {
-                fileInputRef.current.value = "";
-            }
+            if (fileInputRef.current) fileInputRef.current.value = "";
+            
         }
     };
 

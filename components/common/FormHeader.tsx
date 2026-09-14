@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { ArticleStatusType, AutosaveStatus } from "@/types";
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
+import { AutosaveStatus } from "@/hooks/usePublishableForm";
 
-interface ArticleFormHeaderProps {
+interface FormHeaderProps {
+    title: string
     isExisting: boolean;
-    articleStatus: ArticleStatusType;
+    subtitleEdit: string
+    subtitleCreate: string
+    publishedStatus: PublishedStatus;
     autosaveStatus: AutosaveStatus;
     isPublishing: boolean;
     isPublished: boolean;
@@ -15,9 +19,12 @@ interface ArticleFormHeaderProps {
     onPublish: () => void;
 }
 
-export const ArticleFormHeader = ({
+export const FormHeader = ({
+    title,
     isExisting,
-    articleStatus,
+    subtitleEdit,
+    subtitleCreate,
+    publishedStatus,
     autosaveStatus,
     isPublishing,
     isPublished,
@@ -25,15 +32,14 @@ export const ArticleFormHeader = ({
     onSaveDraft,
     onSaveChanges,
     onPublish,
-}: ArticleFormHeaderProps) => {
+}: FormHeaderProps) => {
     return (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white dark:bg-gray-900 p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            {/* Title & Back */}
             <div className="flex items-center gap-3">
                 <Link
-                    href="/admin/artikel"
+                    href={`/admin/${title.toLocaleLowerCase()}`}
                     className="flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200 hover:border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors"
-                    title="Kembali ke Daftar Artikel"
+                    title={`Kembali ke Daftar ${title}`}
                 >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -42,30 +48,28 @@ export const ArticleFormHeader = ({
                 <div>
                     <div className="flex items-center gap-2">
                         <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                            {isExisting ? "Edit Artikel" : "Buat Artikel Baru"}
+                            {isExisting ?`Edit ${title}` : `Buat ${title} Baru`}
                         </h1>
                         <span
-                            className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${articleStatus === "PUBLISHED"
+                            className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${publishedStatus === "PUBLISHED"
                                 ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                                 : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
                                 }`}
                         >
-                            {articleStatus === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
+                            {publishedStatus === "PUBLISHED" ? "Dipublikasikan" : "Draf"}
                         </span>
                     </div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                         {isExisting
-                            ? "Perbarui konten atau detail publikasi artikel"
-                            : "Tulis artikel edukasi atau promosi seputar K3 dan alat berat"}
+                            ? subtitleEdit
+                            : subtitleCreate}
                     </p>
                 </div>
             </div>
 
-            {/* Autosave Status Indicator & Action Buttons */}
             <div className="flex items-center gap-3">
                 <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5 mr-1">
                     {isPublished ? (
-                        // Artikel sudah live -> tampilkan status "perubahan belum disimpan", BUKAN autosave
                         hasUnsavedChanges ? (
                             <>
                                 <span className="size-2 rounded-full bg-amber-500" />
@@ -87,7 +91,6 @@ export const ArticleFormHeader = ({
                             )
                         )
                     ) : (
-                        // Artikel masih draft -> perilaku autosave lama tetap jalan
                         <>
                             {autosaveStatus === "saving" && (
                                 <>
@@ -120,7 +123,6 @@ export const ArticleFormHeader = ({
                         Jadikan Draf
                     </button>
                     {isPublished ? (
-                        // Artikel sudah publish -> tombol "Simpan Perubahan" menggantikan "Simpan Draf"
                         <button
                             type="button"
                             onClick={onSaveChanges}
