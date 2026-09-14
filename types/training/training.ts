@@ -3,7 +3,7 @@ import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums
 export type TrainingCategory = {
     id: string
     name: string
-    slug: string
+    // slug: string
 }
 
 // Hapus kalo udah selesai buat model training
@@ -25,7 +25,7 @@ export type InitialTrainingData = {
     image: string
     status: PublishedStatus
     trainingCategoryId: string
-    certificationType: CertificationType
+    certification: CertificationType
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null

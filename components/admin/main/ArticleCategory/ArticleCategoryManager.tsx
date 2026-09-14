@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createArticleCategory } from "@/lib/data/article/articleCategoryAction";
-import {ArticleCategoryRow} from "./";
+import {ArticleCategoryRow} from ".";
 
 type Category = { id: string; name: string };
 

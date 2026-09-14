@@ -43,7 +43,7 @@ export async function saveDraft(input: DraftInput) {
             image: input.image || "/images/no-image.jpg",
             description: input.description,
             trainingCategoryId: input.trainingCategoryId,
-            Certification: (input.certification as CertificationType) || "KEMNAKER",
+            certification: (input.certification as CertificationType) || "KEMNAKER",
             status: (input.status as PublishedStatus) || "DRAFT"
         }
     })
