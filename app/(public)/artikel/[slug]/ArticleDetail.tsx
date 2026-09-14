@@ -2,7 +2,7 @@ import SharePost from "@/components/public/Article/SharePost";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
-import { ArticleWithCategory } from "@/types";
+import type { ArticleWithCategory } from "@/types";
 
 const ArticleDetail = ({ article }: { article: ArticleWithCategory }) => {
     const formattedDate = article.createdAt

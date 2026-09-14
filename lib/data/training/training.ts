@@ -1,6 +1,24 @@
-import { CertificationType } from "@/lib/generated/prisma/enums";
+import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 import { cache } from "react";
+
+export const getPublishedTrainings = cache(async () => {
+    try {
+        return await prisma.training.count({
+            where: {
+                deletedAt: null,
+                status: "PUBLISHED",
+            },
+        });
+    } catch (error) {
+        console.error(
+            "Failed to count published trainings:",
+            error
+        );
+
+        return 0;
+    }
+});
 
 // Untuk halaman publik: hanya training yang sudah PUBLISHED
 export const getAllTrainingData = cache(
@@ -60,11 +78,17 @@ export const getAllTrainingsForAdmin = cache(async () => {
     }
 })
 
-export const getTotalTrainings = cache(async () => {
-    try {
-        return await prisma.training.count()
-    } catch (err) {
-        console.error("failed to fetch total data: ", err)
-        return null
-    }
-})
+export const getTotalTrainings = cache(
+    async (options?: { status?: PublishedStatus }) => {
+        try {
+            return await prisma.training.count({
+                where: {
+                    deletedAt: null,
+                    ...(options?.status ? { status: options.status } : {})
+                }
+            })
+        } catch (err) {
+            console.error("failed to fetch total data: ", err)
+            return null
+        }
+    })

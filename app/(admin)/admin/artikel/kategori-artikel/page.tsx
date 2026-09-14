@@ -1,29 +1,86 @@
 import { CategoryManager } from "@/components/admin/main/Category";
-import { getAllArticleCategories, getTotalArticles } from "@/lib/data/article";
+
+import {
+    getAllArticleCategories,
+} from "@/lib/data/article/articleCategory";
+
+import {
+    getTotalArticles,
+} from "@/lib/data/article/article";
+
 import {
     createArticleCategory,
     updateArticleCategory,
     softDeleteArticleCategory,
-} from "@/lib/data/article";
+} from "@/lib/data/article/articleCategoryAction";
 
-const CategoryPage = async () => {
-    const categories = await getAllArticleCategories();
-    const totalArticles = await getTotalArticles()
+type PageProps = {
+    searchParams: Promise<{
+        search?: string;
+        page?: string;
+    }>;
+};
+
+export default async function ArticleCategoryPage({
+    searchParams,
+}: PageProps) {
+    const params = await searchParams;
+
+    const search = params.search ?? "";
+
+    const page = Math.max(
+        1,
+        Number(params.page ?? "1") || 1
+    );
+
+    const limit = 10;
+
+    const [
+        categoryResult,
+        totalArticles,
+        publishedArticles,
+    ] = await Promise.all([
+        getAllArticleCategories({
+            search,
+            page,
+            limit,
+        }),
+
+        getTotalArticles(),
+
+        getTotalArticles({ status: "PUBLISHED" }),
+    ]);
 
     return (
         <CategoryManager
-            initialCategories={categories}
+            initialCategories={
+                categoryResult.data
+            }
+            pagination={
+                categoryResult.pagination
+            }
+            searchQuery={search}
+            totalCategories={
+                categoryResult.totalCategories
+            }
+            totalItems={totalArticles ?? 0}
+            publishedItems={
+                publishedArticles ?? 0
+            }
             title="Kategori Artikel"
-            description="Kelola kategori untuk mengelompokkan artikel edukasi dan informasi K3."
-            singularLabel="kategori"
-            pluralLabel="kategori artikel"
+            description="Kelola kategori yang digunakan pada artikel."
+            singularLabel="Kategori"
+            pluralLabel="Kategori Artikel"
             itemLabel="Artikel"
-            totalItems={totalArticles}
-            createCategory={createArticleCategory}
-            updateCategory={updateArticleCategory}
-            deleteCategory={softDeleteArticleCategory}
+            createCategory={
+                createArticleCategory
+            }
+            updateCategory={
+                updateArticleCategory
+            }
+            deleteCategory={
+                softDeleteArticleCategory
+            }
         />
     );
-};
-
-export default CategoryPage;
+}

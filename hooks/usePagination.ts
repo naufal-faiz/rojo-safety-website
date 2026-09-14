@@ -20,3 +20,5 @@ export default function usePagination<T>(data: T[], itemsPerPage: number = 10) {
         currentPage, setCurrentPage, totalPages, paginatedData, totalItems: data.length
     }
 }
+
+// NOTE INI DIGUNAKAN UNTUK DATA SEDIKIT, MAKIN BANYAK PINDAH KE SERVER SIDE

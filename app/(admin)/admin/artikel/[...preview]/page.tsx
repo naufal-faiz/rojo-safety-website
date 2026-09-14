@@ -1,5 +1,5 @@
 import MainArticlePageSection from "@/app/(public)/artikel/[slug]/MainArticlePageSection"
-import { getArticleBySlug } from "@/lib/data/article"
+import { getArticleBySlug } from "@/lib/data/article/article"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -29,7 +29,7 @@ const PreviewPage = async ({ params }: ArticlePreviewProps) => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                Preview Artikel {article.title}
+                Preview Artikel
               </h1>
               <span
                 className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${article.status === "PUBLISHED"

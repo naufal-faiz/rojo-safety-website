@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { softDeleteTrainingData } from "@/lib/data/training";
+import { softDeleteTrainingData } from "@/lib/data/training/trainingAction";
 import { useTableFilter, usePagination } from "@/hooks";
 import { FilterBar, Pagination, EmptyState } from "@/components/common";
 import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums";

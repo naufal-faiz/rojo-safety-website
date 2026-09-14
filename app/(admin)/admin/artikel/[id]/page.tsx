@@ -1,7 +1,7 @@
 import { ArticleForm } from "@/components/admin/main/Article";
 import { notFound } from "next/navigation";
-import { getAllArticleCategories } from "@/lib/data/article";
-import { getArticleById } from "@/lib/data/article";
+import { getAllArticleCategories } from "@/lib/data/article/articleCategory";
+import { getArticleById } from "@/lib/data/article/article";
 
 type EditArticleProps = { params: Promise<{ id: string }> };
 

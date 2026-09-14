@@ -1,7 +1,7 @@
 import ArticleDetail from "./ArticleDetail";
 import ArticleCategoryListSection from "./ArticleCategoryListSection";
 import AsideArticle from "@/components/public/Article/AsideArticle";
-import { ArticleWithCategory } from '@/types';
+import type { ArticleWithCategory } from '@/types';
 
 const MainArticlePageSection = ({article}: {article: ArticleWithCategory}) => {
     return (

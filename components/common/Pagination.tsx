@@ -4,9 +4,17 @@ type PaginationProps = {
     onPageChange: (page: number) => void
     totalItems: number
     itemsPerPage: number
+    itemLabel?: string
 }
 
-const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage }: PaginationProps) => {
+const Pagination = ({
+    currentPage,
+    totalPages,
+    onPageChange,
+    totalItems,
+    itemsPerPage,
+    itemLabel = "item",
+}: PaginationProps) => {
     if (totalPages <= 1) return null
     const startItem = (currentPage - 1) * itemsPerPage + 1
     const endItem = Math.min(currentPage * itemsPerPage, totalItems)
@@ -34,7 +42,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
     return (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-3.5 border-t border-gray-200 dark:border-gray-800">
             <p className="text-xs text-gray-500 dark:text-gray-400">
-                Menampilkan {startItem}–{endItem} dari {totalItems} artikel
+                Menampilkan {startItem}–{endItem} dari {totalItems} {itemLabel}
             </p>
 
             <div className="flex items-center gap-1">

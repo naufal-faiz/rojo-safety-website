@@ -1,5 +1,5 @@
 import usePublishableForm from "./usePublishableForm";
-import { publishArticle, saveDraft } from "@/lib/data/article";
+import { publishArticle, saveDraft } from "@/lib/data/article/articleAction";
 import { slugify } from "@/lib/utils/slugify";
 import { ArticleFormProps } from "@/types";
 

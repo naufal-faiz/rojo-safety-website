@@ -1,6 +1,5 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { getAllTrainingsForAdmin } from "@/lib/data/training";
+import { getAllTrainingsForAdmin, getTotalTrainings } from "@/lib/data/training/training";
 import { TrainingListClient } from "@/components/admin/main/Training";
 
 export const dynamic = "force-dynamic";
@@ -8,9 +7,9 @@ export const dynamic = "force-dynamic";
 const TrainingDataPage = async () => {
     const [trainings, totalCount, publishedCount, draftCount] = await Promise.all([
         getAllTrainingsForAdmin(),
-        prisma.training.count({ where: { deletedAt: null } }),
-        prisma.training.count({ where: { deletedAt: null, status: "PUBLISHED" } }),
-        prisma.training.count({ where: { deletedAt: null, status: "DRAFT" } }),
+        getTotalTrainings(),
+        getTotalTrainings({ status: "PUBLISHED" }),
+        getTotalTrainings({ status: "DRAFT" }),
     ]);
 
     return (

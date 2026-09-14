@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateArticleCategory, softDeleteArticleCategory } from "@/lib/data/article";
+import { updateArticleCategory, softDeleteArticleCategory } from "@/lib/data/article/articleCategoryAction";
 
 type Category = { id: string; name: string };
 

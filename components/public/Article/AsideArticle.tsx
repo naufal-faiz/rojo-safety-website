@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getPublishedArticles } from "@/lib/data/article";
+import { getPublishedArticles } from "@/lib/data/article/article";
 
 type postCategoryProps = {
   title: string

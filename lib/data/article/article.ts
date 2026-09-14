@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { prisma } from "../../prisma";
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
 
 // Get Article Where Status = Published
 export const getPublishedArticles = cache(
@@ -73,11 +74,17 @@ export const getAllArticlesForAdmin = cache(async () => {
     }
 });
 
-export const getTotalArticles = cache(async () => {
-    try {
-        return await prisma.article.count()
-    } catch (err) {
-        console.error("failed to fetch total data: ", err)
-        return null
-    }
-})
+export const getTotalArticles = cache(
+    async (options?: { status?: PublishedStatus }) => {
+        try {
+            return await prisma.article.count({
+                where: {
+                    deletedAt: null,
+                    ...(options?.status ? { status: options.status } : {})
+                }
+            })
+        } catch (err) {
+            console.error("failed to fetch total data: ", err)
+            return null
+        }
+    })
