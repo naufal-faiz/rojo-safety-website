@@ -1,15 +1,11 @@
-import { prisma } from "@/lib/prisma";
 import { ArticleForm } from "@/components/admin/main/Article";
+import { getAllArticleCategories } from "@/lib/data/article/articleCategory";
 
 const NewArticlePage = async () => {
-    const categories = await prisma.articleCategory.findMany({
-        orderBy: { name: "desc" },
-    });
+    const categories = await getAllArticleCategories()
     return (
-        <ArticleForm categories={categories} />
+        <ArticleForm categories={categories.data} />
     )
 }
 
 export default NewArticlePage;
-
-

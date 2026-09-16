@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export type BaseCategory = {
-    id: string;
-    name: string;
+id: string;
+name: string;
 };
 
 export type CategoryActionResult = {

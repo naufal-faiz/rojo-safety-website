@@ -11,11 +11,7 @@ export const getPublishedTrainings = cache(async () => {
             },
         });
     } catch (error) {
-        console.error(
-            "Failed to count published trainings:",
-            error
-        );
-
+        console.error("Failed to count published trainings:", error);
         return 0;
     }
 });

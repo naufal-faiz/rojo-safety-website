@@ -200,9 +200,7 @@ export default function CategoryManager<
 
     return (
         <div className="space-y-6">
-            {/* =====================================================
-                HEADER
-            ====================================================== */}
+            {/* HEADER */}
             <div>
                 <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
                     {title}
@@ -213,9 +211,7 @@ export default function CategoryManager<
                 </p>
             </div>
 
-            {/* =====================================================
-                STATS
-            ====================================================== */}
+            {/* STATS */}
             <CategoryStats
                 totalCategories={totalCategories}
                 totalItems={totalItems}
@@ -223,22 +219,16 @@ export default function CategoryManager<
                 itemLabel={itemLabel}
             />
 
-            {/* =====================================================
-                SEARCH
-            ====================================================== */}
+            {/* SEARCH */}
             <FilterBar
                 searchQuery={search}
                 onSearchChange={setSearch}
                 searchPlaceholder={`Cari ${pluralLabel.toLowerCase()}...`}
             />
 
-            {/* =====================================================
-                MAIN CONTENT
-            ====================================================== */}
+            {/* MAIN CONTENT */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-                {/* =================================================
-                    CREATE CATEGORY
-                ================================================== */}
+                {/* CREATE CATEGORY */}
                 <div className="h-fit rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-gray-800 dark:bg-gray-900">
                     <div>
                         <h2 className="text-base font-semibold text-gray-900 dark:text-white">
@@ -254,13 +244,11 @@ export default function CategoryManager<
 
                     <form
                         onSubmit={handleCreate}
-                        className="mt-6 space-y-4"
-                    >
+                        className="mt-6 space-y-4">
                         <div>
                             <label
                                 htmlFor="category-name"
-                                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                            >
+                                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Nama kategori
                             </label>
 
@@ -285,8 +273,7 @@ export default function CategoryManager<
                                 isCreating ||
                                 !newName.trim()
                             }
-                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-40"
-                        >
+                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-40">
                             {isCreating ? (
                                 "Menyimpan..."
                             ) : (
@@ -295,8 +282,7 @@ export default function CategoryManager<
                                         className="h-4 w-4"
                                         fill="none"
                                         viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
+                                        stroke="currentColor">
                                         <path
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
@@ -312,9 +298,7 @@ export default function CategoryManager<
                     </form>
                 </div>
 
-                {/* =================================================
-                    CATEGORY LIST
-                ================================================== */}
+                {/* CATEGORY LIST */}
                 <div className="min-w-0 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs dark:border-gray-800 dark:bg-gray-900">
                     {/* LIST HEADER */}
                     <div className="flex flex-col gap-1 border-b border-gray-200 px-5 py-4 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
@@ -341,17 +325,14 @@ export default function CategoryManager<
                                             <th className="w-16 px-5 py-3.5">
                                                 #
                                             </th>
-
                                             <th className="px-5 py-3.5">
                                                 Nama
                                             </th>
-
                                             <th className="w-40 px-5 py-3.5 text-right">
                                                 Aksi
                                             </th>
                                         </tr>
                                     </thead>
-
                                     <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                                         {initialCategories.map(
                                             (
@@ -365,7 +346,7 @@ export default function CategoryManager<
                                                     sequence={
                                                         (pagination.page -
                                                             1) *
-                                                            pagination.limit +
+                                                        pagination.limit +
                                                         index +
                                                         1
                                                     }
@@ -385,9 +366,7 @@ export default function CategoryManager<
                                 </table>
                             </div>
 
-                            {/* =================================================
-                                PAGINATION
-                            ================================================== */}
+                            {/* PAGINATION */}
                             <Pagination
                                 currentPage={
                                     pagination.page
@@ -428,4 +407,4 @@ export default function CategoryManager<
             </div>
         </div>
     );
-}
+}

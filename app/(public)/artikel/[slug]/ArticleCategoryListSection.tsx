@@ -10,7 +10,7 @@ const ArticleCategoryListSection = async () => {
       </h4>
 
       <ul>
-        {categories.map(category => (
+        {categories.data.map(category => (
           <li className="mb-3 transition-all duration-300 last:mb-0 hover:text-primary" key={category.id}>
             <a href="#">{category.name}</a>
           </li>

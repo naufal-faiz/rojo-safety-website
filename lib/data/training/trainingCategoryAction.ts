@@ -9,50 +9,40 @@ type CategoryActionResult = {
 };
 
 const slugify = (value: string) => {
-    return value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+    return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 };
 
-export async function createTrainingCategory(
-    name: string
-): Promise<CategoryActionResult> {
+export async function createTrainingCategory(name: string): Promise<CategoryActionResult> {
     try {
         const trimmedName = name.trim();
-
         if (!trimmedName) {
             return {
                 success: false,
-                message:
-                    "Nama kategori tidak boleh kosong.",
+                message: "Nama kategori tidak boleh kosong."
             };
         }
 
         const slug = slugify(trimmedName);
 
-        const existing =
-            await prisma.trainingCategory.findFirst({
-                where: {
-                    OR: [
-                        {
-                            name: trimmedName,
-                            deletedAt: null,
-                        },
-                        {
-                            slug,
-                            deletedAt: null,
-                        },
-                    ],
-                },
-            });
+        const existing = await prisma.trainingCategory.findFirst({
+            where: {
+                OR: [
+                    {
+                        name: trimmedName,
+                        deletedAt: null,
+                    },
+                    {
+                        slug,
+                        deletedAt: null,
+                    },
+                ],
+            },
+        });
 
         if (existing) {
             return {
                 success: false,
-                message:
-                    "Kategori dengan nama tersebut sudah ada.",
+                message: "Kategori dengan nama tersebut sudah ada."
             };
         }
 
@@ -62,139 +52,101 @@ export async function createTrainingCategory(
                 slug,
             },
         });
-
-        revalidatePath(
-            "/admin/training/kategori-training"
-        );
+        revalidatePath("/admin/training/kategori-training");
 
         return {
             success: true,
-            message:
-                "Kategori training berhasil dibuat.",
+            message: "Kategori training berhasil dibuat.",
         };
     } catch (error) {
-        console.error(
-            "Failed to create training category:",
-            error
-        );
+        console.error("Failed to create training category:", error);
 
         return {
             success: false,
-            message:
-                "Gagal membuat kategori training.",
+            message: "Gagal membuat kategori training.",
         };
     }
 }
 
-export async function updateTrainingCategory(
-    id: string,
-    name: string
-): Promise<CategoryActionResult> {
+export async function updateTrainingCategory(id: string, name: string): Promise<CategoryActionResult> {
     try {
         const trimmedName = name.trim();
 
         if (!trimmedName) {
             return {
                 success: false,
-                message:
-                    "Nama kategori tidak boleh kosong.",
+                message: "Nama kategori tidak boleh kosong.",
             };
         }
 
         const slug = slugify(trimmedName);
 
-        const existing =
-            await prisma.trainingCategory.findFirst({
-                where: {
-                    OR: [
-                        {
-                            name: trimmedName,
-                            deletedAt: null,
-                        },
-                        {
-                            slug,
-                            deletedAt: null,
-                        },
-                    ],
-                    NOT: {
-                        id,
+        const existing = await prisma.trainingCategory.findFirst({
+            where: {
+                OR: [
+                    {
+                        name: trimmedName,
+                        deletedAt: null,
                     },
-                },
-            });
+                    {
+                        slug,
+                        deletedAt: null,
+                    },
+                ],
+                NOT: { id },
+            },
+        });
 
         if (existing) {
             return {
                 success: false,
-                message:
-                    "Kategori dengan nama tersebut sudah ada.",
+                message: "Kategori dengan nama tersebut sudah ada.",
             };
         }
 
         await prisma.trainingCategory.update({
-            where: {
-                id,
-            },
+            where: { id },
             data: {
                 name: trimmedName,
                 slug,
             },
         });
 
-        revalidatePath(
-            "/admin/training/kategori-training"
-        );
+        revalidatePath("/admin/training/kategori-training");
 
         return {
             success: true,
-            message:
-                "Kategori training berhasil diperbarui.",
+            message: "Kategori training berhasil diperbarui.",
         };
     } catch (error) {
-        console.error(
-            "Failed to update training category:",
-            error
-        );
+        console.error("Failed to update training category:", error);
 
         return {
             success: false,
-            message:
-                "Gagal memperbarui kategori training.",
+            message: "Gagal memperbarui kategori training.",
         };
     }
 }
 
-export async function softDeleteTrainingCategory(
-    id: string
-): Promise<CategoryActionResult> {
+export async function softDeleteTrainingCategory(id: string): Promise<CategoryActionResult> {
     try {
         await prisma.trainingCategory.update({
-            where: {
-                id,
-            },
-            data: {
-                deletedAt: new Date(),
-            },
+            where: { id },
+            data: { deletedAt: new Date() },
         });
 
-        revalidatePath(
-            "/admin/training/kategori-training"
-        );
+        revalidatePath("/admin/training/kategori-training");
 
         return {
             success: true,
-            message:
-                "Kategori training berhasil dihapus.",
+            message: "Kategori training berhasil dihapus.",
         };
     } catch (error) {
-        console.error(
-            "Failed to delete training category:",
-            error
-        );
+        console.error("Failed to delete training category:", error);
 
         return {
             success: false,
-            message:
-                "Gagal menghapus kategori training.",
+            message: "Gagal menghapus kategori training.",
         };
     }
 }

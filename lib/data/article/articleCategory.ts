@@ -16,28 +16,20 @@ export const getAllArticleCategories = cache(
         try {
             const normalizedPage = Math.max(1, page);
             const normalizedLimit = Math.max(1, limit);
-
-            const skip =
-                (normalizedPage - 1) *
-                normalizedLimit;
-
+            const skip = (normalizedPage - 1) * normalizedLimit;
             const where = {
                 deletedAt: null,
                 ...(search.trim()
                     ? {
-                          name: {
-                              contains: search.trim(),
-                              mode: "insensitive" as const,
-                          },
-                      }
+                        name: {
+                            contains: search.trim(),
+                            mode: "insensitive" as const,
+                        },
+                    }
                     : {}),
             };
 
-            const [
-                categories,
-                totalItems,
-                totalCategories,
-            ] = await Promise.all([
+            const [categories, totalItems, totalCategories,] = await Promise.all([
                 prisma.articleCategory.findMany({
                     where,
                     orderBy: {
@@ -46,30 +38,14 @@ export const getAllArticleCategories = cache(
                     skip,
                     take: normalizedLimit,
                 }),
-
-                prisma.articleCategory.count({
-                    where,
-                }),
-
-                prisma.articleCategory.count({
-                    where: {
-                        deletedAt: null,
-                    },
-                }),
+                prisma.articleCategory.count({ where }),
+                prisma.articleCategory.count({ where: { deletedAt: null } }),
             ]);
 
-            const totalPages = Math.max(
-                1,
-                Math.ceil(
-                    totalItems / normalizedLimit
-                )
-            );
-
+            const totalPages = Math.max(1, Math.ceil(totalItems / normalizedLimit));
             return {
                 data: categories,
-
                 totalCategories,
-
                 pagination: {
                     page: normalizedPage,
                     limit: normalizedLimit,
@@ -78,10 +54,7 @@ export const getAllArticleCategories = cache(
                 },
             };
         } catch (error) {
-            console.error(
-                "Failed to fetch article categories:",
-                error
-            );
+            console.error("Failed to fetch article categories: ", error);
 
             return {
                 data: [],

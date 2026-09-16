@@ -19,7 +19,7 @@ const EditTrainingPage = async ({ params }: EditTrainingProps) => {
 
     return (
         <TrainingForm
-            categories={categories}
+            categories={categories.data}
             initialData={training}
             trainingId={id}
         />

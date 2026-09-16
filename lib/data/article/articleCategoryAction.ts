@@ -3,9 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
-export async function createArticleCategory(
-    name: string
-) {
+export async function createArticleCategory(name: string) {
     const cleanName = name.trim();
 
     if (!cleanName) {
@@ -35,24 +33,17 @@ export async function createArticleCategory(
         }
 
         await prisma.articleCategory.create({
-            data: {
-                name: cleanName,
-            },
+            data: { name: cleanName },
         });
 
-        revalidatePath(
-            "/admin/artikel/kategori-artikel"
-        );
+        revalidatePath("/admin/artikel/kategori-artikel");
 
         return {
             success: true,
             message: "Kategori berhasil dibuat.",
         };
     } catch (error) {
-        console.error(
-            "Failed to create article category:",
-            error
-        );
+        console.error("Failed to create article category: ", error);
 
         return {
             success: false,
@@ -61,10 +52,7 @@ export async function createArticleCategory(
     }
 }
 
-export async function updateArticleCategory(
-    id: string,
-    name: string
-) {
+export async function updateArticleCategory(id: string, name: string) {
     const cleanName = name.trim();
 
     if (!cleanName) {
@@ -75,19 +63,16 @@ export async function updateArticleCategory(
     }
 
     try {
-        const existingCategory =
-            await prisma.articleCategory.findFirst({
-                where: {
-                    name: {
-                        equals: cleanName,
-                        mode: "insensitive",
-                    },
-                    deletedAt: null,
-                    NOT: {
-                        id,
-                    },
+        const existingCategory = await prisma.articleCategory.findFirst({
+            where: {
+                name: {
+                    equals: cleanName,
+                    mode: "insensitive",
                 },
-            });
+                deletedAt: null,
+                NOT: { id },
+            },
+        });
 
         if (existingCategory) {
             return {
@@ -97,27 +82,18 @@ export async function updateArticleCategory(
         }
 
         await prisma.articleCategory.update({
-            where: {
-                id,
-            },
-            data: {
-                name: cleanName,
-            },
+            where: { id },
+            data: { name: cleanName, },
         });
 
-        revalidatePath(
-            "/admin/artikel/kategori-artikel"
-        );
+        revalidatePath("/admin/artikel/kategori-artikel");
 
         return {
             success: true,
             message: "Kategori berhasil diperbarui.",
         };
     } catch (error) {
-        console.error(
-            "Failed to update article category:",
-            error
-        );
+        console.error("Failed to update article category:", error)
 
         return {
             success: false,
@@ -126,32 +102,21 @@ export async function updateArticleCategory(
     }
 }
 
-export async function softDeleteArticleCategory(
-    id: string
-) {
+export async function softDeleteArticleCategory(id: string) {
     try {
         await prisma.articleCategory.update({
-            where: {
-                id,
-            },
-            data: {
-                deletedAt: new Date(),
-            },
+            where: { id },
+            data: { deletedAt: new Date() },
         });
 
-        revalidatePath(
-            "/admin/artikel/kategori-artikel"
-        );
+        revalidatePath("/admin/artikel/kategori-artikel");
 
         return {
             success: true,
             message: "Kategori berhasil dihapus.",
         };
     } catch (error) {
-        console.error(
-            "Failed to delete article category:",
-            error
-        );
+        console.error("Failed to delete article category:", error);
 
         return {
             success: false,

@@ -16,28 +16,19 @@ export const getAllTrainingCategories = cache(
         try {
             const normalizedPage = Math.max(1, page);
             const normalizedLimit = Math.max(1, limit);
-
-            const skip =
-                (normalizedPage - 1) *
-                normalizedLimit;
-
+            const skip = (normalizedPage - 1) * normalizedLimit;
             const where = {
                 deletedAt: null,
                 ...(search.trim()
                     ? {
-                          name: {
-                              contains: search.trim(),
-                              mode: "insensitive" as const,
-                          },
-                      }
-                    : {}),
+                        name: {
+                            contains: search.trim(),
+                            mode: "insensitive" as const,
+                        },
+                    } : {}),
             };
 
-            const [
-                categories,
-                totalItems,
-                totalCategories,
-            ] = await Promise.all([
+            const [categories, totalItems, totalCategories,] = await Promise.all([
                 prisma.trainingCategory.findMany({
                     where,
                     orderBy: {
@@ -46,30 +37,15 @@ export const getAllTrainingCategories = cache(
                     skip,
                     take: normalizedLimit,
                 }),
-
-                prisma.trainingCategory.count({
-                    where,
-                }),
-
-                prisma.trainingCategory.count({
-                    where: {
-                        deletedAt: null,
-                    },
-                }),
+                prisma.trainingCategory.count({ where }),
+                prisma.trainingCategory.count({ where: { deletedAt: null } }),
             ]);
 
-            const totalPages = Math.max(
-                1,
-                Math.ceil(
-                    totalItems / normalizedLimit
-                )
-            );
+            const totalPages = Math.max(1, Math.ceil(totalItems / normalizedLimit));
 
             return {
                 data: categories,
-
                 totalCategories,
-
                 pagination: {
                     page: normalizedPage,
                     limit: normalizedLimit,
@@ -78,10 +54,7 @@ export const getAllTrainingCategories = cache(
                 },
             };
         } catch (error) {
-            console.error(
-                "Failed to fetch training categories:",
-                error
-            );
+            console.error("Failed to fetch training categories:", error);
 
             return {
                 data: [],

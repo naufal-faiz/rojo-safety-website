@@ -19,7 +19,7 @@ const EditArticlePage = async ({ params }: EditArticleProps) => {
 
     return (
         <ArticleForm
-            categories={categories}
+            categories={categories.data}
             initialData={article}
             articleId={id}
         />
