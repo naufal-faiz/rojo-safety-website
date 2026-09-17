@@ -8,11 +8,7 @@ type GetTrainingCategoriesOptions = {
 };
 
 export const getAllTrainingCategories = cache(
-    async ({
-        search = "",
-        page = 1,
-        limit = 10,
-    }: GetTrainingCategoriesOptions = {}) => {
+    async ({ search = "", page = 1, limit = 10, }: GetTrainingCategoriesOptions = {}) => {
         try {
             const normalizedPage = Math.max(1, page);
             const normalizedLimit = Math.max(1, limit);

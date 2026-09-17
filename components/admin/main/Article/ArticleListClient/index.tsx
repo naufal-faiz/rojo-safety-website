@@ -21,9 +21,7 @@ type ArticleItem = {
     category?: { id: string; name: string } | null;
 };
 
-export default function ArticleListClient({
-    initialArticles,
-}: {
+export default function ArticleListClient({ initialArticles }: {
     initialArticles: ArticleItem[];
 }) {
     const [articles, setArticles] = useState<ArticleItem[]>(initialArticles);
@@ -58,7 +56,8 @@ export default function ArticleListClient({
     return (
         <div className="space-y-6">
             {/* Filter Bar */}
-            <FilterBar searchQuery={searchQuery}
+            <FilterBar 
+                searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
                 searchPlaceholder="Cari judul, kategori, atau slug..."
                 selectedStatus={selectedStatus}

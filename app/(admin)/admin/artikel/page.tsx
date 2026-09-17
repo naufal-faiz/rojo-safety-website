@@ -1,12 +1,12 @@
 import { ArticleListClient } from "@/components/admin/main/Article";
-import { getAllArticlesForAdmin, getTotalArticles } from "@/lib/data/article/article";
+import { getAllArticles, getTotalArticles } from "@/lib/data/article/article";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
 const ArticlesPage = async () => {
     const [articles, totalCount, publishedCount, draftCount] = await Promise.all([
-        getAllArticlesForAdmin(),
+        getAllArticles(),
         getTotalArticles(),
         getTotalArticles({ status: "PUBLISHED" }),
         getTotalArticles({ status: "DRAFT" })
@@ -57,8 +57,7 @@ const ArticlesPage = async () => {
                 </div>
             </div>
 
-            {/* Articles Table and Filter */}
-            <ArticleListClient initialArticles={articles} />
+            <ArticleListClient initialArticles={articles.data} />
         </div>
     );
 };

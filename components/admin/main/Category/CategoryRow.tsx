@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export type BaseCategory = {
-id: string;
-name: string;
+    id: string;
+    name: string;
 };
 
 export type CategoryActionResult = {
@@ -16,13 +16,8 @@ export type CategoryActionResult = {
 type CategoryRowProps<T extends BaseCategory> = {
     sequence: number;
     category: T;
-    updateCategory: (
-        id: string,
-        name: string
-    ) => Promise<CategoryActionResult>;
-    deleteCategory: (
-        id: string
-    ) => Promise<CategoryActionResult>;
+    updateCategory: (id: string, name: string) => Promise<CategoryActionResult>;
+    deleteCategory: (id: string) => Promise<CategoryActionResult>;
 };
 
 export default function CategoryRow<T extends BaseCategory>({
@@ -39,7 +34,6 @@ export default function CategoryRow<T extends BaseCategory>({
 
     const handleSave = async () => {
         const trimmedName = name.trim();
-
         if (!trimmedName) {
             alert("Nama kategori tidak boleh kosong.");
             return;
@@ -52,17 +46,14 @@ export default function CategoryRow<T extends BaseCategory>({
 
         try {
             setIsLoading(true);
-
             const result = await updateCategory(
                 category.id,
                 trimmedName
             );
-
             if (!result.success) {
                 alert(result.message);
                 return;
             }
-
             setIsEditing(false);
 
             router.refresh();
@@ -85,14 +76,11 @@ export default function CategoryRow<T extends BaseCategory>({
 
         try {
             setIsLoading(true);
-
             const result = await deleteCategory(category.id);
-
             if (!result.success) {
                 alert(result.message);
                 return;
             }
-
             router.refresh();
         } catch (error) {
             console.error("Failed to delete category:", error);
@@ -153,7 +141,6 @@ export default function CategoryRow<T extends BaseCategory>({
                             >
                                 {isLoading ? "Menyimpan..." : "Simpan"}
                             </button>
-
                             <button
                                 type="button"
                                 onClick={handleCancel}

@@ -2,39 +2,57 @@ import { CertificationType, PublishedStatus } from "@/lib/generated/prisma/enums
 import { prisma } from "@/lib/prisma";
 import { cache } from "react";
 
-export const getPublishedTrainings = cache(async () => {
-    try {
-        return await prisma.training.count({
-            where: {
-                deletedAt: null,
-                status: "PUBLISHED",
-            },
-        });
-    } catch (error) {
-        console.error("Failed to count published trainings:", error);
-        return 0;
-    }
-});
+type GetAllTrainingsOptions = {
+    status?: PublishedStatus
+    certificationType?: CertificationType
+    search?: string
+    page?: number
+    limit?: number
+}
 
-// Untuk halaman publik: hanya training yang sudah PUBLISHED
-export const getAllTrainingData = cache(
-    async (options?: { certificationType?: CertificationType; take?: number }) => {
-        try {
-            return await prisma.training.findMany({
-                where: {
-                    status: "PUBLISHED",
-                    deletedAt: null,
-                    ...(options?.certificationType ? { certification: options.certificationType } : {})
-                },
-                include: { category: true },
-                orderBy: { createdAt: "desc" },
-                take: options?.take
-            })
-        } catch (err) {
-            console.error("Failed to fetch training data: ", err)
-            return []
+export const getAllTrainings = (async (options: GetAllTrainingsOptions = {}) => {
+    try {
+        const normalizedPage = Math.max(1, options.page ?? 1)
+        const normalizedLimit = Math.max(1, options.limit ?? 10)
+        const skip = (normalizedPage - 1) * normalizedLimit
+        const search = options.search?.trim()
+        const where = {
+            deletedAt: null,
+            ...(options.status ? { status: options.status } : {}),
+            ...(options.certificationType ? { certification: options.certificationType } : {}),
+            ...(search ? { title: { containts: search, mode: "insensitive" as const } } : {})
         }
-    })
+        const [trainings, totalItems] = await Promise.all([
+            prisma.training.findMany({
+                where,
+                include: { category: true },
+                orderBy: { updatedAt: "desc" },
+                skip, take: normalizedLimit
+            }),
+            prisma.training.count({ where })
+        ])
+        return {
+            data: trainings,
+            totalItems,
+            pagination: {
+                page: normalizedPage,
+                limit: normalizedLimit,
+                totalPages: Math.ceil(totalItems / normalizedLimit)
+            }
+        }
+    } catch (err) {
+        console.error("Failed to fetch trainings data: ", err)
+        return {
+            data: [],
+            totalItems: 0,
+            pagination: {
+                page: options.page ?? 1,
+                limit: options.limit ?? 10,
+                totalPages: 0
+            }
+        }
+    }
+})
 
 export const getTrainingDataBySlug = cache(async (slug: string) => {
     try {
@@ -58,19 +76,6 @@ export const getTrainingById = cache(async (id: string) => {
     } catch (err) {
         console.error("Failed to fetch training by id: ", err)
         return null
-    }
-})
-
-export const getAllTrainingsForAdmin = cache(async () => {
-    try {
-        return await prisma.training.findMany({
-            where: { deletedAt: null },
-            include: { category: true },
-            orderBy: { updatedAt: "desc" },
-        })
-    } catch (err) {
-        console.error("Failed to fetch trainings for admin: ", err)
-        return []
     }
 })
 

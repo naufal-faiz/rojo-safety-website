@@ -1,6 +1,6 @@
 import { CategoryManager } from "@/components/admin/main/Category";
 import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
-import { getTotalTrainings, getPublishedTrainings } from "@/lib/data/training/training";
+import { getTotalTrainings, getAllTrainings } from "@/lib/data/training/training";
 import { createTrainingCategory, updateTrainingCategory, softDeleteTrainingCategory } from "@/lib/data/training/trainingCategoryAction";
 
 type PageProps = { searchParams: Promise<{ search?: string; page?: string; }> };
@@ -13,7 +13,7 @@ export default async function TrainingCategoryPage({ searchParams, }: PageProps)
     const [categoryResult, totalTrainings, publishedTrainings] = await Promise.all([
         getAllTrainingCategories({ search, page, limit, }),
         getTotalTrainings(),
-        getPublishedTrainings(),
+        getAllTrainings({status: "PUBLISHED"}),
     ]);
 
     return (
@@ -23,7 +23,7 @@ export default async function TrainingCategoryPage({ searchParams, }: PageProps)
             searchQuery={search}
             totalCategories={categoryResult.totalCategories}
             totalItems={totalTrainings ?? 0}
-            publishedItems={publishedTrainings ?? 0}
+            publishedItems={publishedTrainings.totalItems ?? 0}
             title="Kategori Training"
             description="Kelola kategori yang digunakan pada training."
             singularLabel="Kategori"

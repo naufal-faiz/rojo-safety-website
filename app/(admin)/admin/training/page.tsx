@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { getAllTrainingsForAdmin, getTotalTrainings } from "@/lib/data/training/training";
+import { getAllTrainings, getTotalTrainings } from "@/lib/data/training/training";
 import { TrainingListClient } from "@/components/admin/main/Training";
 
 export const dynamic = "force-dynamic";
 
 const TrainingDataPage = async () => {
     const [trainings, totalCount, publishedCount, draftCount] = await Promise.all([
-        getAllTrainingsForAdmin(),
+        getAllTrainings(),
         getTotalTrainings(),
         getTotalTrainings({ status: "PUBLISHED" }),
         getTotalTrainings({ status: "DRAFT" }),
@@ -55,7 +55,7 @@ const TrainingDataPage = async () => {
                 </div>
             </div>
 
-            <TrainingListClient initialTrainings={trainings} />
+            <TrainingListClient initialTrainings={trainings.data} />
         </div>
     );
 };

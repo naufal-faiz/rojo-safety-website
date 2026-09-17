@@ -8,11 +8,7 @@ type GetArticleCategoriesOptions = {
 };
 
 export const getAllArticleCategories = cache(
-    async ({
-        search = "",
-        page = 1,
-        limit = 10,
-    }: GetArticleCategoriesOptions = {}) => {
+    async ({ search = "", page = 1, limit = 10, }: GetArticleCategoriesOptions = {}) => {
         try {
             const normalizedPage = Math.max(1, page);
             const normalizedLimit = Math.max(1, limit);

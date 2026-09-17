@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getPublishedArticles } from "@/lib/data/article/article";
+import { getAllArticles } from "@/lib/data/article/article";
 
 type postCategoryProps = {
   title: string
@@ -8,16 +8,15 @@ type postCategoryProps = {
 }
 
 const AsideArticle = async ({ title, typeFilter }: postCategoryProps) => {
-  const articles = await getPublishedArticles({ categoryName: typeFilter, take: 3 })
+  const articles = await getAllArticles({ categoryName: typeFilter, limit: 3 })
   return (
     <>
       <div className="animate_top rounded-md border border-stroke bg-white p-9 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
         <h4 className="mb-7.5 text-2xl font-semibold text-black dark:text-white">
           {title}
         </h4>
-
         <div>
-          {articles.map((article) => (
+          {articles.data.map((article) => (
             <div
               className="mb-7.5 flex flex-wrap gap-4 xl:flex-nowrap 2xl:gap-6"
               key={article.id}
