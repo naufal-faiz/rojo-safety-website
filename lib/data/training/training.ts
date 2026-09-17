@@ -5,12 +5,13 @@ import { cache } from "react";
 type GetAllTrainingsOptions = {
     status?: PublishedStatus
     certificationType?: CertificationType
+    categoryId?: string
     search?: string
     page?: number
     limit?: number
 }
 
-export const getAllTrainings = (async (options: GetAllTrainingsOptions = {}) => {
+export const getAllTrainings = cache(async (options: GetAllTrainingsOptions = {}) => {
     try {
         const normalizedPage = Math.max(1, options.page ?? 1)
         const normalizedLimit = Math.max(1, options.limit ?? 10)
@@ -20,7 +21,8 @@ export const getAllTrainings = (async (options: GetAllTrainingsOptions = {}) => 
             deletedAt: null,
             ...(options.status ? { status: options.status } : {}),
             ...(options.certificationType ? { certification: options.certificationType } : {}),
-            ...(search ? { title: { containts: search, mode: "insensitive" as const } } : {})
+            ...(options.categoryId ? { trainingCategoryId: options.categoryId } : {}),
+            ...(search ? { title: { contains: search, mode: "insensitive" as const } } : {})
         }
         const [trainings, totalItems] = await Promise.all([
             prisma.training.findMany({
@@ -37,6 +39,7 @@ export const getAllTrainings = (async (options: GetAllTrainingsOptions = {}) => 
             pagination: {
                 page: normalizedPage,
                 limit: normalizedLimit,
+                totalItems,
                 totalPages: Math.ceil(totalItems / normalizedLimit)
             }
         }
@@ -48,6 +51,7 @@ export const getAllTrainings = (async (options: GetAllTrainingsOptions = {}) => 
             pagination: {
                 page: options.page ?? 1,
                 limit: options.limit ?? 10,
+                totalItems: 0,
                 totalPages: 0
             }
         }

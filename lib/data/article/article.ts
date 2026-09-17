@@ -21,7 +21,7 @@ export const getAllArticles = cache(async (options: GetAllArticlesOptions = {}) 
             deletedAt: null,
             ...(options.status ? { status: options.status } : {}),
             ...(options.categoryName ? { category: { name: options.categoryName } } : {}),
-            ...(search ? { title: { containts: search, mode: "insensitive" as const } } : {})
+            ...(search ? { title: { contains: search, mode: "insensitive" as const } } : {})
         }
         const [articles, totalItems] = await Promise.all([
             prisma.article.findMany({
@@ -38,6 +38,7 @@ export const getAllArticles = cache(async (options: GetAllArticlesOptions = {}) 
             pagination: {
                 page: normalizedPage,
                 limit: normalizedLimit,
+                totalItems,
                 totalPages: Math.ceil(totalItems / normalizedLimit)
             }
         }
@@ -49,6 +50,7 @@ export const getAllArticles = cache(async (options: GetAllArticlesOptions = {}) 
             pagination: {
                 page: options.page ?? 1,
                 limit: options.limit ?? 10,
+                totalItems: 0,
                 totalPages: 0
             }
         }

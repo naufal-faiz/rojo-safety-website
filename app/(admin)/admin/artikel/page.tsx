@@ -1,20 +1,33 @@
 import { ArticleListClient } from "@/components/admin/main/Article";
 import { getAllArticles, getTotalArticles } from "@/lib/data/article/article";
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-const ArticlesPage = async () => {
-    const [articles, totalCount, publishedCount, draftCount] = await Promise.all([
-        getAllArticles(),
+type PageProps = {
+    searchParams: Promise<{ search?: string; status?: string; page?: string }>;
+};
+
+const ArticlesPage = async ({ searchParams }: PageProps) => {
+    const params = await searchParams;
+    const search = params.search ?? "";
+    const status =
+        params.status && params.status !== "ALL"
+            ? (params.status as PublishedStatus)
+            : undefined;
+    const page = Math.max(1, Number(params.page ?? "1") || 1);
+    const limit = 10;
+
+    const [articlesResult, totalCount, publishedCount, draftCount] = await Promise.all([
+        getAllArticles({ search, status, page, limit }),
         getTotalArticles(),
         getTotalArticles({ status: "PUBLISHED" }),
-        getTotalArticles({ status: "DRAFT" })
+        getTotalArticles({ status: "DRAFT" }),
     ]);
 
     return (
         <div className="space-y-6">
-            {/* Header with Title and Create Button */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -35,31 +48,29 @@ const ArticlesPage = async () => {
                 </Link>
             </div>
 
-            {/* Quick Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Total Artikel</p>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        {totalCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{totalCount}</h3>
                 </div>
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-green-600 dark:text-green-400">Dipublikasikan</p>
-                    <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mt-1">
-                        {publishedCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mt-1">{publishedCount}</h3>
                 </div>
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-amber-600 dark:text-amber-400">Draf</p>
-                    <h3 className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">
-                        {draftCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">{draftCount}</h3>
                 </div>
             </div>
 
-            <ArticleListClient initialArticles={articles.data} />
+            <ArticleListClient
+                articles={articlesResult.data}
+                pagination={articlesResult.pagination}
+                searchQuery={search}
+                selectedStatus={status ?? "ALL"}
+            />
         </div>
     );
 };
 
-export default ArticlesPage;
+export default ArticlesPage

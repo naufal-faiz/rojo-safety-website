@@ -1,12 +1,26 @@
 import Link from "next/link";
 import { getAllTrainings, getTotalTrainings } from "@/lib/data/training/training";
 import { TrainingListClient } from "@/components/admin/main/Training";
+import { PublishedStatus } from "@/lib/generated/prisma/enums";
 
 export const dynamic = "force-dynamic";
 
-const TrainingDataPage = async () => {
-    const [trainings, totalCount, publishedCount, draftCount] = await Promise.all([
-        getAllTrainings(),
+type PageProps = {
+    searchParams: Promise<{ search?: string; status?: string; page?: string }>;
+};
+
+const TrainingDataPage = async ({ searchParams }: PageProps) => {
+    const params = await searchParams;
+    const search = params.search ?? "";
+    const status =
+        params.status && params.status !== "ALL"
+            ? (params.status as PublishedStatus)
+            : undefined;
+    const page = Math.max(1, Number(params.page ?? "1") || 1);
+    const limit = 10;
+
+    const [trainingsResult, totalCount, publishedCount, draftCount] = await Promise.all([
+        getAllTrainings({ search, status, page, limit }),
         getTotalTrainings(),
         getTotalTrainings({ status: "PUBLISHED" }),
         getTotalTrainings({ status: "DRAFT" }),
@@ -37,27 +51,26 @@ const TrainingDataPage = async () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Total Training</p>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        {totalCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{totalCount}</h3>
                 </div>
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-green-600 dark:text-green-400">Dipublikasikan</p>
-                    <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mt-1">
-                        {publishedCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mt-1">{publishedCount}</h3>
                 </div>
                 <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
                     <p className="text-xs font-medium text-amber-600 dark:text-amber-400">Draf</p>
-                    <h3 className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">
-                        {draftCount}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">{draftCount}</h3>
                 </div>
             </div>
 
-            <TrainingListClient initialTrainings={trainings.data} />
+            <TrainingListClient
+                trainings={trainingsResult.data}
+                pagination={trainingsResult.pagination}
+                searchQuery={search}
+                selectedStatus={status ?? "ALL"}
+            />
         </div>
     );
 };
 
-export default TrainingDataPage
+export default TrainingDataPage;
