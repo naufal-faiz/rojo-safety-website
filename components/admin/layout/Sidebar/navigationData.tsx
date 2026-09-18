@@ -44,7 +44,7 @@ const navigationData: NavigationData[] = [
       },
       {
         name: "Jenis Alat",
-        path: "/admin/jenis-alat",
+        path: "/admin/training/jenis-alat",
         pro: false
       },
     ],
