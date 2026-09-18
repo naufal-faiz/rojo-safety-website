@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { PublishedStatus } from "@/lib/generated/prisma/client"
 
+import sanitizeHtml from "sanitize-html"
+
 type DraftInput = {
     id?: string
     title: string
@@ -17,6 +19,18 @@ type DraftInput = {
 
 export async function saveDraft(input: DraftInput) {
     const slugValue = input.slug?.trim() || `draft-${Date.now()}`
+    
+    // Sanitize konten HTML sebelum disimpan ke database
+    const cleanContent = sanitizeHtml(input.content || "", {
+        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'iframe', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'div']),
+        allowedAttributes: {
+            ...sanitizeHtml.defaults.allowedAttributes,
+            '*': ['style', 'class', 'id'],
+            'img': ['src', 'alt', 'title', 'width', 'height'],
+            'iframe': ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen']
+        },
+        allowedIframeHostnames: ['www.youtube.com', 'player.vimeo.com']
+    })
 
     // Jika input id tidak null
     if (input.id) {
@@ -26,7 +40,7 @@ export async function saveDraft(input: DraftInput) {
                 title: input.title || "Tanpa Judul",
                 slug: slugValue,
                 thumbnail: input.thumbnail,
-                content: input.content,
+                content: cleanContent,
                 excerpt: input.excerpt,
                 status: (input.status as PublishedStatus) || "DRAFT",
                 articleCategoryId: input.articleCategoryId,
@@ -42,7 +56,7 @@ export async function saveDraft(input: DraftInput) {
             title: input.title || "Tanpa Judul",
             slug: slugValue,
             thumbnail: input.thumbnail || "/images/no-image.jpg",
-            content: input.content || "",
+            content: cleanContent,
             excerpt: input.excerpt || "",
             status: (input.status as PublishedStatus) || "DRAFT",
             articleCategoryId: input.articleCategoryId,

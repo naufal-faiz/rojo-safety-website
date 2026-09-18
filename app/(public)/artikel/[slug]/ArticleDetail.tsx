@@ -1,7 +1,6 @@
 import SharePost from "@/components/public/Article/SharePost";
 import Image from "next/image";
 import Link from "next/link";
-import DOMPurify from "isomorphic-dompurify";
 import type { ArticleWithCategory } from "@/types";
 
 const ArticleDetail = ({ article }: { article: ArticleWithCategory }) => {
@@ -82,7 +81,7 @@ const ArticleDetail = ({ article }: { article: ArticleWithCategory }) => {
             {/* Content Body */}
             <div
                 className="article-details"
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}
+                dangerouslySetInnerHTML={{ __html: article.content }}
             />
 
             {/* Share Post Section */}
