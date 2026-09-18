@@ -1,15 +1,33 @@
+import { TrainingScheduleStatus, TrainingScheduleType } from "@/lib/generated/prisma/enums"
+
 export type TrainingSchedule = {
-    id: number
-    training_id: number
-    start_at: Date
-    end_at: Date
-    location: string
-    price: number
-    status: "publish" | "draft" | "archived"
-    batch_no: number
-    training_type: "inhouse" | "public"
+    id: string
+    trainingId: string
+    type: TrainingScheduleType
+    status: TrainingScheduleStatus
+    startAt: Date | string
+    endAt: Date | string
+    location: string | null
+    price: number | string  // Decimal serializes as string lewat network boundary
     quota: number
-    created_at: Date
-    updated_at: Date
-    deleted_at: Date
+    batch: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    training?: { id: string; title: string; slug: string } | null
+    approvedCount?: number  // di-attach saat query, bukan field DB
+}
+
+export type CreateTrainingScheduleInput = {
+    trainingId: string
+    type: TrainingScheduleType
+    startAt: Date
+    endAt: Date
+    location?: string
+    price: number
+    quota: number
+    batch: number
+}
+
+export type UpdateTrainingScheduleInput = Partial<CreateTrainingScheduleInput> & {
+    status?: TrainingScheduleStatus // hanya DRAFT/OPEN/CLOSED/CANCELLED yang valid ditulis manual
 }

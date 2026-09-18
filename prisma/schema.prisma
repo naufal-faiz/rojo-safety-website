@@ -141,11 +141,39 @@ model TrainingSchedule {
   updatedAt  DateTime               @updatedAt @map("updated_at")
   deletedAt  DateTime?              @map("deleted_at")
   training   Training               @relation(fields: [trainingId], references: [id])
+  registrations TrainingRegistration[]
+
 
   @@index([trainingId])
   @@index([status])
   @@index([type])
   @@map("training_schedule")
+}
+
+model TrainingRegistration {
+  id                  String              @id @default(uuid()) @db.Uuid
+  trainingScheduleId  String              @map("training_schedule_id") @db.Uuid
+  schedule            TrainingSchedule    @relation(fields: [trainingScheduleId], references: [id])
+
+  // Biodata peserta — calon field Person di V2
+  name                String
+  email               String
+  phone               String?
+  company             String?             // free text di V1, jadi FK Company di V2
+
+  status              RegistrationStatus  @default(PENDING)
+  reviewedAt          DateTime?           @map("reviewed_at")
+  reviewedBy          String?             @map("reviewed_by") // id admin (User.id), string dulu
+  rejectionReason     String?             @map("rejection_reason")
+  notes               String?
+
+  createdAt           DateTime            @default(now()) @map("created_at")
+  updatedAt           DateTime            @updatedAt @map("updated_at")
+  deletedAt           DateTime?           @map("deleted_at")
+
+  @@unique([trainingScheduleId, email])
+  @@index([trainingScheduleId, status])
+  @@map("training_registration")
 }
 
 model AdsModal {
@@ -193,12 +221,18 @@ enum TrainingScheduleType {
 enum TrainingScheduleStatus {
   DRAFT
   OPEN
-  FULL
   CLOSED
   CANCELLED
-  COMPLETED
 
   @@map("training_schedule_status")
+}
+
+enum RegistrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@map("registration_status")
 }
 
 enum CertificationType {

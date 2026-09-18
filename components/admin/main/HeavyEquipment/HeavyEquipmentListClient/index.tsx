@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { softDeleteHeavyEquipment } from "@/lib/data/training/heavyEquipmentAction";
+import { softDeleteHeavyEquipment } from "@/lib/data/training/heavyEquipments/heavyEquipmentAction";
 import DataListManager from "@/components/admin/main/DataListManager";
 import { HeavyEquipment } from "@/types";
 

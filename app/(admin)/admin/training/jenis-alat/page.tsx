@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllHeavyEquipments } from "@/lib/data/training/heavyEquipment";
+import { getAllHeavyEquipments } from "@/lib/data/training/heavyEquipments/heavyEquipment";
 import { HeavyEquipmentListClient } from "@/components/admin/main/HeavyEquipment";
 
 export const dynamic = "force-dynamic";

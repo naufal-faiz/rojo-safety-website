@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
-import { getHeavyEquipmentById } from "@/lib/data/training/heavyEquipment";
+import { getAllTrainingCategories } from "@/lib/data/training/trainingcategory/trainingCategory";
+import { getHeavyEquipmentById } from "@/lib/data/training/heavyEquipments/heavyEquipment";
 import { HeavyEquipmentForm } from "@/components/admin/main/HeavyEquipment";
 
 type PageProps = {

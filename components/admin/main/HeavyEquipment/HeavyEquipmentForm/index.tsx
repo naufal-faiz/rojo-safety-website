@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { createHeavyEquipment, updateHeavyEquipment } from "@/lib/data/training/heavyEquipmentAction";
+import { createHeavyEquipment, updateHeavyEquipment } from "@/lib/data/training/heavyEquipments/heavyEquipmentAction";
 import { HeavyEquipmentFormHeader } from "../Form/HeavyEquipmentFormHeader";
 import HeavyEquipmentImageUpload from "../Form/HeavyEquipmentImageUpload";
 import { HeavyEquipment, TrainingCategory } from "@/types";

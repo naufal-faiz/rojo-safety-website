@@ -1,4 +1,4 @@
-import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
+import { getAllTrainingCategories } from "@/lib/data/training/trainingcategory/trainingCategory";
 import { TrainingForm } from "@/components/admin/main/Training";
 
 const NewTrainingPage = async () => {

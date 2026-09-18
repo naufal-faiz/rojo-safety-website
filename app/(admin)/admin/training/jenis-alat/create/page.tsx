@@ -1,4 +1,4 @@
-import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
+import { getAllTrainingCategories } from "@/lib/data/training/trainingcategory/trainingCategory";
 import { HeavyEquipmentForm } from "@/components/admin/main/HeavyEquipment";
 
 const CreateHeavyEquipmentPage = async () => {

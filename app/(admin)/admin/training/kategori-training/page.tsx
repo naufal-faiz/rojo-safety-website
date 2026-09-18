@@ -1,7 +1,7 @@
 import { CategoryManager } from "@/components/admin/main/Category";
-import { getAllTrainingCategories } from "@/lib/data/training/trainingCategory";
+import { getAllTrainingCategories } from "@/lib/data/training/trainingcategory/trainingCategory";
 import { getTotalTrainings, getAllTrainings } from "@/lib/data/training/training";
-import { createTrainingCategory, updateTrainingCategory, softDeleteTrainingCategory } from "@/lib/data/training/trainingCategoryAction";
+import { createTrainingCategory, updateTrainingCategory, softDeleteTrainingCategory } from "@/lib/data/training/trainingcategory/trainingCategoryAction";
 
 type PageProps = { searchParams: Promise<{ search?: string; page?: string; }> };
 
