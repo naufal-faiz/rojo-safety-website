@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export default function Ecommerce() {
+export default function AdminDashboardPage() {
   return (
     <>
-    <div className="p-6 bg-white shadow-solid-10 rounded-2xl dark:bg-black mb-">
+    <div className="p-6 bg-white shadow-solid-10 rounded-2xl dark:bg-black">
       <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
         <div className="w-20 h-20 overflow-hidden border border-gray-200 rounded-full dark:border-gray-800">
           <Image
