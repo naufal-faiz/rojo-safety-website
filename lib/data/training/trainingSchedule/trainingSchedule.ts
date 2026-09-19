@@ -51,6 +51,7 @@ export const getAllSchedules = cache(async (options: GetAllSchedulesOptions = {}
         const countsMap = await getApprovedCountsMap(schedules.map(s => s.id))
         const data = schedules.map(s => ({
             ...s,
+            price: Number(s.price), // Decimal -> number, aman dikirim ke Client Component
             approvedCount: countsMap.get(s.id) ?? 0,
             displayStatus: computeScheduleStatus(s, countsMap.get(s.id) ?? 0)
         }))
@@ -89,6 +90,7 @@ export const getScheduleById = cache(async (id: string) => {
 
         return {
             ...schedule,
+            price: Number(schedule.price),
             approvedCount,
             displayStatus: computeScheduleStatus(schedule, approvedCount)
         }
@@ -113,6 +115,7 @@ export const getPublicSchedulesByTraining = cache(async (trainingId: string) => 
         const countsMap = await getApprovedCountsMap(schedules.map(s => s.id))
         return schedules.map(s => ({
             ...s,
+            price: Number(s.price),
             approvedCount: countsMap.get(s.id) ?? 0,
             displayStatus: computeScheduleStatus(s, countsMap.get(s.id) ?? 0)
         }))
@@ -130,5 +133,39 @@ export const getTotalSchedules = cache(async (options?: { status?: TrainingSched
     } catch (err) {
         console.error("Failed to count schedules: ", err)
         return 0
+    }
+})
+
+/**
+ * Untuk halaman publik "pilih training" (dropdown umum) — semua schedule
+ * yang benar-benar bisa didaftari SAAT INI (displayStatus === "OPEN" beneran,
+ * bukan cuma niat admin). Difilter di app layer karena FULL/COMPLETED
+ * hasil hitungan, tidak bisa di-WHERE langsung di SQL.
+ */
+export const getRegistrableSchedules = cache(async () => {
+    try {
+        const schedules = await prisma.trainingSchedule.findMany({
+            where: {
+                deletedAt: null,
+                status: "OPEN", // niat admin sudah publish, baru dicek realita waktu/quota di bawah
+                training: { status: "PUBLISHED", deletedAt: null }
+            },
+            include: { training: { select: { id: true, title: true, slug: true } } },
+            orderBy: { startAt: "asc" }
+        })
+
+        const countsMap = await getApprovedCountsMap(schedules.map(s => s.id))
+
+        return schedules
+            .map(s => ({
+                ...s,
+                price: Number(s.price),
+                approvedCount: countsMap.get(s.id) ?? 0,
+                displayStatus: computeScheduleStatus(s, countsMap.get(s.id) ?? 0)
+            }))
+            .filter(s => s.displayStatus === "OPEN")
+    } catch (err) {
+        console.error("Failed to fetch registrable schedules: ", err)
+        return []
     }
 })

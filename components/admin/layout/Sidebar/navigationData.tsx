@@ -1,13 +1,12 @@
 import {
   CalenderIcon,
-  DollarLineIcon,
   GridIcon,
   ListIcon,
   PageIcon,
-  TableIcon,
   TimeIcon,
   UserCircleIcon,
   VideoIcon,
+  ShootingStarIcon
 } from "@/public/icons/index";
 
 export type NavigationData = {
@@ -24,16 +23,27 @@ const navigationData: NavigationData[] = [
     path: "/admin",
   },
   {
-    name: "Training",
+    name: "Kegiatan",
     icon: <CalenderIcon />,
     subItems: [
       {
         name: "Jadwal Training",
-        path: "/admin/jadwal-training",
+        path: "/admin/training/jadwal",
         pro: false
       },
       {
-        name: "Jenis Kegiatan",
+        name: "Pendaftaran",
+        path: "/admin/training/pendaftaran",
+        pro: false
+      }
+    ]
+  },
+  {
+    name: "Training",
+    icon: <ShootingStarIcon />,
+    subItems: [
+      {
+        name: "Jenis Training",
         path: "/admin/training",
         pro: false
       },

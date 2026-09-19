@@ -80,3 +80,14 @@ export const getRegistrationCountsByStatus = cache(async (trainingScheduleId: st
         return { pending: 0, approved: 0, rejected: 0 }
     }
 })
+
+export const getTotalRegistrations = cache(async (options?: { status?: RegistrationStatus }) => {
+    try {
+        return await prisma.trainingRegistration.count({
+            where: { deletedAt: null, ...(options?.status ? { status: options.status } : {}) }
+        })
+    } catch (err) {
+        console.error("Failed to count registrations: ", err)
+        return 0
+    }
+})
