@@ -5,22 +5,22 @@ import StarterKit from "@tiptap/starter-kit";
 import ResizeImage from "tiptap-extension-resize-image";
 import Link from "@tiptap/extension-link";
 import { useEffect, useRef, useState } from "react";
-import { EditorToolbar } from "./EditorToolbar";
-import { EditorLinkModal } from "./EditorLinkModal";
-import { EditorStats } from "./EditorStats";
+import { EditorToolbar } from "../admin/main/Article/Editor/EditorToolbar";
+import { EditorLinkModal } from "../admin/main/Article/Editor/EditorLinkModal";
+import { EditorStats } from "../admin/main/Article/Editor/EditorStats";
 import { UploadError, uploadImage } from "@/lib/supabase/uploadImage";
 
-export interface ArticleContentEditorProps {
+export interface ContentEditorProps {
     value: string;
     onChange: (content: string) => void;
     placeholder?: string;
 }
 
-export const ArticleContentEditor = ({
+export const ContentEditor = ({
     value,
     onChange,
     placeholder = "Tulis isi artikel yang menarik di sini...",
-}: ArticleContentEditorProps) => {
+}: ContentEditorProps) => {
     const [isUploadingImage, setIsUploadingImage] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
     const [linkUrl, setLinkUrl] = useState("");
@@ -169,4 +169,4 @@ export const ArticleContentEditor = ({
     );
 };
 
-export default ArticleContentEditor;
+export default ContentEditor;

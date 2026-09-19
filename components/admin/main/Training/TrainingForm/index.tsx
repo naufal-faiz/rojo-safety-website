@@ -1,7 +1,7 @@
 "use client";
 
 import { TrainingSidebar } from "../Form";
-import { FormHeader, TitleSlugField } from "@/components/common";
+import { ContentEditor, FormHeader, TitleSlugField } from "@/components/common";
 import { TrainingCategory, InitialTrainingData } from "@/types";
 import { useTrainingForm } from "@/hooks";
 
@@ -57,15 +57,19 @@ const TrainingForm = ({ categories, initialData, trainingId }: TrainingFormProps
                                 Deskripsi Training <span className="text-red-500">*</span>
                             </label>
                             <span className="text-xs text-gray-400">
-                                {description.length} karakter
+                                Gunakan toolbar untuk format teks, gambar, & link
                             </span>
                         </div>
-                        <textarea
+                        {/* <textarea
                             rows={10}
                             placeholder="Jelaskan cakupan materi, target peserta, dan manfaat training ini..."
                             value={description}
                             onChange={(e) => updateField({ description: e.target.value })}
                             className="w-full rounded-xl border border-gray-300 bg-white p-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                        /> */}
+                        <ContentEditor
+                            value={description}
+                            onChange={(html) => updateField({ description: html })}
                         />
                     </div>
                 </div>

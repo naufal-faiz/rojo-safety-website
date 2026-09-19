@@ -1,9 +1,9 @@
 "use client";
 
-import { ArticleContentEditor, ArticleSidebar } from "@/components/admin/main/Article";
+import { ArticleSidebar } from "@/components/admin/main/Article";
 import { ArticleFormProps } from "@/types";
 import { useArticleForm } from "@/hooks";
-import { FormHeader, TitleSlugField } from "@/components/common";
+import { FormHeader, TitleSlugField, ContentEditor } from "@/components/common";
 
 const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) => {
     const {
@@ -59,7 +59,7 @@ const ArticleForm = ({ categories, initialData, articleId }: ArticleFormProps) =
                                 Gunakan toolbar untuk format teks, gambar, & link
                             </span>
                         </div>
-                        <ArticleContentEditor
+                        <ContentEditor
                             value={content}
                             onChange={(html) => updateField({ content: html })}
                         />
